@@ -5,8 +5,15 @@
  width="1254.000000pt" height="1254.000000pt" viewBox="0 0 1254.000000 1254.000000"
  preserveAspectRatio="xMidYMid meet">
 
+<defs>
+<linearGradient id="foundly-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#4F46E5"/>
+<stop offset="100%" stop-color="#6C5CE7"/>
+</linearGradient>
+</defs>
+
 <g transform="translate(0.000000,1254.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+fill="url(#foundly-gradient)" stroke="none">
 <path d="M5760 10179 c-263 -25 -565 -101 -835 -209 -130 -51 -370 -179 -510
 -271 -729 -478 -1232 -1263 -1339 -2089 -13 -98 -15 -409 -17 -2120 -1 -2227
 -5 -2078 66 -2294 39 -121 77 -200 151 -314 62 -96 200 -242 294 -313 82 -62
