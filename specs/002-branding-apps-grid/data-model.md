@@ -64,11 +64,11 @@ Existing fields (`name`, `description`, `url`, `social`) are unchanged.
 
 Static brand images. No runtime entity; documented for traceability.
 
-| Asset                   | Path                              | Usage                                    | Notes                                        |
-| ----------------------- | --------------------------------- | ---------------------------------------- | -------------------------------------------- |
-| Isotipo favicon         | `public/favicon.svg`              | `<link rel="icon">` in `BaseLayout`      | Root-relative `/favicon.svg`                 |
-| Isotipo source/fallback | `public/icon-fl.png`              | Fallback / regeneration source           | Not rendered directly                        |
-| Full logo               | `src/assets/branding-logo-fl.png` | Navbar via `<Image />`; default OG image | Moved from `public/` for `<Image />` support |
+| Asset           | Path                              | Usage                                    | Notes                                         |
+| --------------- | --------------------------------- | ---------------------------------------- | --------------------------------------------- |
+| Isotipo favicon | `public/favicon.svg`              | `<link rel="icon">` in `BaseLayout`      | Root-relative `/favicon.svg`                  |
+| Isotipo source  | `src/assets/icon-fl.png`          | Hero watermark source (via `<Image />`)  | Moved from `public/`; rendered by feature 004 |
+| Full logo       | `src/assets/branding-logo-fl.png` | Navbar via `<Image />`; default OG image | Moved from `public/` for `<Image />` support  |
 
 ## State Transitions
 

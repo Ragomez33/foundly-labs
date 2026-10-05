@@ -109,7 +109,7 @@ As a visitor, I want clear next steps from the Hero, so I can jump straight to t
 
 ## Assumptions
 
-- The brand assets already added under `public/` (the F isotipo `icon-fl.png`/`favicon.svg` and the full logo `branding-logo-fl.png`) are the intended sources; the isotipo is used as the favicon and the full logo is used in the navbar.
+- The brand assets added to the project (the F isotipo `src/assets/icon-fl.png`, the full logo `src/assets/branding-logo-fl.png`, and `public/favicon.svg`) are the intended sources; the isotipo is used as the favicon and the full logo is used in the navbar.
 - A local-first rationale section will be created on the home page, because both the navbar and the secondary CTA target it and a visible target is required for those links to work.
 - Anchor links resolve to home-page sections (e.g., the applications and rationale sections); when triggered from another route they navigate back to the home page section.
 - The four application entries and their copy are authoritative and displayed verbatim (category, status, target, and description).

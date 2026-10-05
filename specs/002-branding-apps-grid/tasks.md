@@ -32,7 +32,7 @@ of each story.
 **Purpose**: Prepare the brand assets used across the feature
 
 - [x] T001 Move the full logo from `public/branding-logo-fl.png` to `src/assets/branding-logo-fl.png` and confirm it can be imported (remove the `public/` copy)
-- [x] T002 [P] Verify `public/favicon.svg` renders the F isotipo; if not, regenerate it from `public/icon-fl.png`
+- [x] T002 [P] Verify `public/favicon.svg` renders the F isotipo; if not, regenerate it from `src/assets/icon-fl.png`
 
 ---
 

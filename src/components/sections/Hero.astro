@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import iconFl from '@/assets/icon-fl.png';
 import Badge from '@/components/ui/Badge.astro';
 import Button from '@/components/ui/Button.astro';
 
@@ -11,16 +13,53 @@ interface Props {
 const { title, description, badge = 'Local-First' } = Astro.props;
 ---
 
-<section class="mx-auto max-w-4xl px-6 py-24 text-center">
-  <Badge label={badge} />
-  <h1 class="text-primary mt-6 text-4xl font-bold tracking-tight sm:text-6xl">{title}</h1>
-  <p class="text-secondary mx-auto mt-6 max-w-2xl text-lg">{description}</p>
-  <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-    <Button href="#apps" variant="primary">
-      Explorar Ecosistema
-    </Button>
-    <Button href="#manifesto" variant="secondary">
-      ¿Por qué Local-First?
-    </Button>
+<section class="relative mx-auto max-w-4xl overflow-hidden px-6 py-24 text-center">
+  <div class="hero-watermark pointer-events-none absolute top-1/2 left-1/2 z-0" aria-hidden="true">
+    <Image
+      src={iconFl}
+      alt=""
+      loading="eager"
+      class="w-[40rem] max-w-none opacity-25 mix-blend-multiply blur-[0.5px]"
+    />
+  </div>
+
+  <div class="relative z-10">
+    <Badge label={badge} />
+    <h1 class="text-primary mt-6 text-4xl font-bold tracking-tight sm:text-6xl">{title}</h1>
+    <p class="text-secondary mx-auto mt-6 max-w-2xl text-lg">{description}</p>
+    <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <Button href="#apps" variant="primary">
+        Explorar Ecosistema
+      </Button>
+      <Button href="#manifesto" variant="secondary">
+        ¿Por qué Local-First?
+      </Button>
+    </div>
   </div>
 </section>
+
+<style>
+  .hero-watermark {
+    animation: y-tilt-spin 12s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes y-tilt-spin {
+    0% {
+      transform: translate(-50%, -50%) perspective(1000px) rotateY(-25deg) rotateX(5deg);
+    }
+    50% {
+      transform: translate(-50%, -50%) perspective(1000px) rotateY(25deg) rotateX(-5deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) perspective(1000px) rotateY(-25deg) rotateX(5deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-watermark {
+      animation: none;
+      transform: translate(-50%, -50%);
+    }
+  }
+</style>

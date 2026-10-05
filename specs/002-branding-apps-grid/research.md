@@ -32,7 +32,7 @@ Software Ecosystem"`). `BaseLayout` renders it verbatim when no page title is pr
 - **Decision**: Move the full logo into `src/assets/branding-logo-fl.png` and render it with
   Astro's `<Image />` from `astro:assets` in the navbar; use the resolved asset URL as the default
   Open Graph image. Keep the isotipo favicon as the static `public/favicon.svg` (plus
-  `public/icon-fl.png` as the isotipo source/fallback).
+  `src/assets/icon-fl.png` as the isotipo source).
 - **Rationale**: `code-rules.md` mandates `<Image />` for images (optimization and sizing),
   while the favicon must remain a stable root URL. `src/assets` is the required home for
   `<Image />` sources.
@@ -78,7 +78,7 @@ border-border-subtle rounded-2xl shadow-card` plus spacing, using the existing t
 
 - **Decision**: Treat the existing `public/favicon.svg` as the isotipo favicon and keep the
   `<link rel="icon" type="image/svg+xml">` reference in `BaseLayout`. Verify at implementation time
-  that it renders the F isotipo; if it does not, replace it using `public/icon-fl.png` as the
+  that it renders the F isotipo; if it does not, replace it using `src/assets/icon-fl.png` as the
   source.
 - **Rationale**: FR-001 requires the isotipo as the favicon; the asset is already present.
 - **Alternatives considered**: Generating a new SVG favicon (deferred unless the current one is
