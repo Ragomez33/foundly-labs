@@ -1,5 +1,6 @@
 ---
 import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
 
 interface Props {
   title: string;
@@ -14,4 +15,12 @@ const { title, description, badge = 'Local-First' } = Astro.props;
   <Badge label={badge} />
   <h1 class="text-primary mt-6 text-4xl font-bold tracking-tight sm:text-6xl">{title}</h1>
   <p class="text-secondary mx-auto mt-6 max-w-2xl text-lg">{description}</p>
+  <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+    <Button href="#apps" variant="primary">
+      Explorar Ecosistema
+    </Button>
+    <Button href="#manifesto" variant="secondary">
+      ¿Por qué Local-First?
+    </Button>
+  </div>
 </section>

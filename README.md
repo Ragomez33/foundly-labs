@@ -38,19 +38,23 @@ npm install
 
 ```text
 src/
-├── assets/          # Local branding assets
+├── assets/          # Local branding assets (full logo)
 ├── components/
-│   ├── ui/          # Static UI primitives (.astro)
-│   ├── sections/    # Landing sections (.astro)
+│   ├── ui/          # Static UI primitives (AppCard, Badge, Button)
+│   ├── sections/    # Landing sections (Navbar, Hero, AppsGrid, Manifesto)
 │   └── islands/     # Interactive, hydratable islands (.tsx)
 ├── content/         # Content collection entries (pricing, faqs, features)
-├── data/            # Static constants (siteConfig, navigation)
-├── layouts/         # BaseLayout.astro (SEO, fonts, backgrounds)
+├── data/            # Static constants (siteConfig, navigation, apps)
+├── layouts/         # BaseLayout.astro (SEO, fonts, backgrounds, navbar)
 ├── pages/           # Routes (index, privacy, terms)
 ├── styles/          # global.css + tokens.css
 ├── types/           # Shared TypeScript types
 └── utils/           # Formatters and analytics helpers
 ```
+
+The home page composes the Hero, the applications grid (`#apps`), and the local-first manifesto
+(`#manifesto`). The navbar links to those anchors as `/#apps` and `/#manifesto`, and the Hero CTAs
+link to `#apps` and `#manifesto`.
 
 ## Design tokens
 

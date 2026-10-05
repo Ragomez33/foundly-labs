@@ -2,24 +2,21 @@
 import '@/styles/global.css';
 import '@fontsource-variable/inter';
 import interLatinWoff2 from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import logo from '@/assets/branding-logo-fl.png';
+import Navbar from '@/components/sections/Navbar.astro';
 import { siteConfig } from '@/data/siteConfig';
 import type { BaseLayoutProps } from '@/types';
 
 type Props = BaseLayoutProps;
 
-const {
-  title,
-  description = siteConfig.description,
-  image = '/favicon.svg',
-  canonical,
-} = Astro.props;
+const { title, description = siteConfig.description, image, canonical } = Astro.props;
 
 const baseUrl = Astro.site ?? new URL(siteConfig.url);
-const pageTitle = title ? `${title} · ${siteConfig.name}` : siteConfig.name;
+const pageTitle = title ? `${title} · ${siteConfig.defaultTitle}` : siteConfig.defaultTitle;
 const canonicalUrl = canonical
   ? new URL(canonical, baseUrl).href
   : new URL(Astro.url.pathname, baseUrl).href;
-const imageUrl = new URL(image, baseUrl).href;
+const imageUrl = image ? new URL(image, baseUrl).href : new URL(logo.src, baseUrl).href;
 ---
 
 <!doctype html>
@@ -52,6 +49,7 @@ const imageUrl = new URL(image, baseUrl).href;
     <meta name="twitter:image" content={imageUrl} />
   </head>
   <body class="bg-app-body text-primary flex min-h-screen flex-col">
+    <Navbar />
     <slot />
   </body>
 </html>

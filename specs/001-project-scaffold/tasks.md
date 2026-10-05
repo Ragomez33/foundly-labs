@@ -128,10 +128,10 @@ confirm they override defaults.
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [X] T033 [P] Document setup, run, and validation steps in `README.md` (link the quickstart)
-- [X] T034 Run the [quickstart.md](./quickstart.md) validation end-to-end (build, `astro check`, lint, and Lighthouse desktop/mobile)
-- [X] T035 [P] Add an ESLint `no-restricted-syntax` rule to flag literal brand hex values in `src/components/**` in `eslint.config.js`
-- [X] T036 Verify constitution and `code-rules.md` compliance (SDD traceability, static-first/zero-JS, strict typing, tokens-only colors)
+- [x] T033 [P] Document setup, run, and validation steps in `README.md` (link the quickstart)
+- [x] T034 Run the [quickstart.md](./quickstart.md) validation end-to-end (build, `astro check`, lint, and Lighthouse desktop/mobile)
+- [x] T035 [P] Add an ESLint `no-restricted-syntax` rule to flag literal brand hex values in `src/components/**` in `eslint.config.js`
+- [x] T036 Verify constitution and `code-rules.md` compliance (SDD traceability, static-first/zero-JS, strict typing, tokens-only colors)
 
 ---
 

@@ -8,9 +8,19 @@ export interface SocialLink {
 
 export interface SiteConfig {
   name: string;
+  defaultTitle: string;
   description: string;
   url: string;
   social: SocialLink[];
+}
+
+export interface Application {
+  id: string;
+  name: string;
+  category: string;
+  status: string;
+  target: string;
+  description: string;
 }
 
 export interface NavItem {

@@ -2,6 +2,7 @@ import type { SiteConfig } from '@/types';
 
 export const siteConfig: SiteConfig = {
   name: 'Foundly Labs',
+  defaultTitle: 'Foundly Labs | Local-First Software Ecosystem',
   description:
     'Ecosistema local-first de productos ágiles para comercio, finanzas y creación, sin compromisos.',
   url: 'https://foundlylabs.com',
