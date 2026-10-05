@@ -1,1 +1,29 @@
 .opencode
+
+# Dependencies
+node_modules/
+
+# Astro / build output
+dist/
+.astro/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Test coverage
+coverage/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.tmp
+*.swp

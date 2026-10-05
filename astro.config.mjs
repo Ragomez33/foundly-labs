@@ -1,0 +1,20 @@
+// @ts-check
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwindcss from '@tailwindcss/vite';
+import { fileURLToPath } from 'node:url';
+
+// https://astro.build/config
+export default defineConfig({
+  // Static (SSG) output is Astro's default; no adapter is required.
+  site: 'https://foundlylabs.com',
+  integrations: [react()],
+  vite: {
+    plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
+    },
+  },
+});

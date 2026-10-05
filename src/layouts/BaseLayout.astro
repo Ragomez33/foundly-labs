@@ -1,0 +1,57 @@
+---
+import '@/styles/global.css';
+import '@fontsource-variable/inter';
+import interLatinWoff2 from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import { siteConfig } from '@/data/siteConfig';
+import type { BaseLayoutProps } from '@/types';
+
+type Props = BaseLayoutProps;
+
+const {
+  title,
+  description = siteConfig.description,
+  image = '/favicon.svg',
+  canonical,
+} = Astro.props;
+
+const baseUrl = Astro.site ?? new URL(siteConfig.url);
+const pageTitle = title ? `${title} · ${siteConfig.name}` : siteConfig.name;
+const canonicalUrl = canonical
+  ? new URL(canonical, baseUrl).href
+  : new URL(Astro.url.pathname, baseUrl).href;
+const imageUrl = new URL(image, baseUrl).href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={interLatinWoff2}
+      crossorigin="anonymous"
+    />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+  </head>
+  <body class="bg-app-body text-primary flex min-h-screen flex-col">
+    <slot />
+  </body>
+</html>

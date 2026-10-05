@@ -62,27 +62,27 @@ La landing page de Foundly Labs heredará la línea de diseño limpia, clara y d
 ```css
 :root {
   /* Backgrounds & Surfaces */
-  --bg-gradient-top: linear-gradient(180deg, #C8B6FF 0%, #D8B4FE 100%);
-  --bg-app-body: #FAFAFC;
-  --bg-card-light: #FFFFFF;
-  --bg-surface-elevated: #F4F3F8;
-  --bg-badge-pill: #F0EEF9;
+  --bg-gradient-top: linear-gradient(180deg, #c8b6ff 0%, #d8b4fe 100%);
+  --bg-app-body: #fafafc;
+  --bg-card-light: #ffffff;
+  --bg-surface-elevated: #f4f3f8;
+  --bg-badge-pill: #f0eef9;
 
   /* Brand Accents & Financial Indicators */
-  --accent-primary: #6C5CE7; /* Vibrant Neon Purple */
+  --accent-primary: #6c5ce7; /* Vibrant Neon Purple */
   --accent-primary-glow: rgba(108, 92, 231, 0.35);
-  --accent-positive: #10B981; /* Emerald Green */
-  --accent-negative: #EF4444; /* Crimson Red */
-  --accent-gold: #F59E0B; /* Amber/Warning */
+  --accent-positive: #10b981; /* Emerald Green */
+  --accent-negative: #ef4444; /* Crimson Red */
+  --accent-gold: #f59e0b; /* Amber/Warning */
 
   /* Typography & Text */
-  --text-primary: #1E1B2E;
-  --text-secondary: #6B7280;
-  --text-muted: #9CA3AF;
+  --text-primary: #1e1b2e;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
 
   /* Borders & Shadows */
-  --border-subtle: #E6E4F0;
-  --border-lavender: #DCD8EC;
+  --border-subtle: #e6e4f0;
+  --border-lavender: #dcd8ec;
   --shadow-card: 0px 8px 16px rgba(108, 92, 231, 0.05);
   --shadow-fab: 0px 10px 20px rgba(108, 92, 231, 0.35);
 }

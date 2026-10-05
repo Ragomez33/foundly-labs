@@ -1,0 +1,9 @@
+{
+  "name": "Plan de ejemplo",
+  "description": "Contenido de ejemplo para validar el esquema de la colección de precios.",
+  "monthlyPriceCents": 0,
+  "annualPriceCents": 0,
+  "features": ["Contenido de ejemplo"],
+  "badge": "Ejemplo",
+  "highlighted": false
+}

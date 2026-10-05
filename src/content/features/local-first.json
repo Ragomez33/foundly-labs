@@ -1,0 +1,6 @@
+{
+  "title": "Local-First",
+  "description": "Tus datos viven en tu dispositivo: funcionan sin conexión y son tuyos.",
+  "icon": "device",
+  "order": 1
+}
