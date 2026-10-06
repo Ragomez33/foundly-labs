@@ -6,12 +6,26 @@ export interface SocialLink {
   href: string;
 }
 
+export interface OrganizationRef {
+  name: string;
+  url: string;
+}
+
 export interface SiteConfig {
   name: string;
   defaultTitle: string;
   description: string;
   url: string;
+  defaultImage: string;
+  parentOrganization: OrganizationRef;
   social: SocialLink[];
+}
+
+export interface SEOProps {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
 }
 
 export interface Application {

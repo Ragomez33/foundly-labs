@@ -2,21 +2,13 @@
 import '@/styles/global.css';
 import '@fontsource-variable/inter';
 import interLatinWoff2 from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import logo from '@/assets/branding-logo-fl.png';
 import Navbar from '@/components/sections/Navbar.astro';
-import { siteConfig } from '@/data/siteConfig';
+import SEO from '@/components/seo/SEO.astro';
 import type { BaseLayoutProps } from '@/types';
 
 type Props = BaseLayoutProps;
 
-const { title, description = siteConfig.description, image, canonical } = Astro.props;
-
-const baseUrl = Astro.site ?? new URL(siteConfig.url);
-const pageTitle = title ? `${title} · ${siteConfig.defaultTitle}` : siteConfig.defaultTitle;
-const canonicalUrl = canonical
-  ? new URL(canonical, baseUrl).href
-  : new URL(Astro.url.pathname, baseUrl).href;
-const imageUrl = image ? new URL(image, baseUrl).href : new URL(logo.src, baseUrl).href;
+const { title, description, image, canonical } = Astro.props;
 ---
 
 <!doctype html>
@@ -32,21 +24,7 @@ const imageUrl = image ? new URL(image, baseUrl).href : new URL(logo.src, baseUr
       href={interLatinWoff2}
       crossorigin="anonymous"
     />
-    <title>{pageTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={siteConfig.name} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={imageUrl} />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={imageUrl} />
+    <SEO title={title} description={description} image={image} canonicalURL={canonical} />
   </head>
   <body class="bg-app-body text-primary flex min-h-screen flex-col">
     <Navbar />

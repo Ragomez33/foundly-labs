@@ -1,0 +1,61 @@
+---
+import { apps } from '@/data/apps';
+import { siteConfig } from '@/data/siteConfig';
+import type { SEOProps } from '@/types';
+
+type Props = SEOProps;
+
+const { title, description = siteConfig.description, image, canonicalURL } = Astro.props;
+
+const baseUrl = Astro.site ?? new URL(siteConfig.url);
+const pageTitle = title ? `${title} · ${siteConfig.name}` : siteConfig.defaultTitle;
+const canonicalUrl = canonicalURL
+  ? new URL(canonicalURL, baseUrl).href
+  : new URL(Astro.url.pathname, baseUrl).href;
+const imageUrl = new URL(image ?? siteConfig.defaultImage, baseUrl).href;
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: new URL('/favicon.svg', baseUrl).href,
+  parentOrganization: {
+    '@type': 'Organization',
+    name: siteConfig.parentOrganization.name,
+    url: siteConfig.parentOrganization.url,
+  },
+};
+
+const softwareJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: apps.map((app) => ({
+    '@type': 'SoftwareApplication',
+    name: app.name,
+    description: app.description,
+    applicationCategory: app.category,
+    operatingSystem: app.target,
+    author: { '@type': 'Organization', name: siteConfig.name },
+  })),
+};
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(organizationJsonLd)}></script>
+<script type="application/ld+json" is:inline set:html={JSON.stringify(softwareJsonLd)}></script>

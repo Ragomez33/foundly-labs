@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
@@ -8,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 export default defineConfig({
   // Static (SSG) output is Astro's default; no adapter is required.
   site: 'https://foundlylabs.com',
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
     resolve: {

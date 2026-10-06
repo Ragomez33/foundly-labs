@@ -33,14 +33,14 @@ When client-side UI hydration is required, isolate the component in React and as
 
 ### 3.1 Directory Matrix
 
-| Element                    | Naming Standard              | Location                                           | Example                                            |
-| -------------------------- | ---------------------------- | -------------------------------------------------- | -------------------------------------------------- |
-| Pages / Routes             | kebab-case (`.astro`)        | `src/pages/`                                       | `src/pages/index.astro`, `src/pages/privacy.astro` |
-| Astro Components           | PascalCase (`.astro`)        | `src/components/ui/` or `src/components/sections/` | `HeroSection.astro`, `Navbar.astro`                |
-| React Islands              | PascalCase (`.tsx`)          | `src/components/islands/`                          | `PricingCalculator.tsx`, `MobileMenu.tsx`          |
-| Layouts                    | PascalCase (`.astro`)        | `src/layouts/`                                     | `BaseLayout.astro`                                 |
-| Data / Content Collections | kebab-case (`.json` / `.ts`) | `src/content/` or `src/data/`                      | `src/data/features.ts`, `src/data/pricing.ts`      |
-| Utilities & Constants      | camelCase (`.ts`)            | `src/utils/` or `src/constants/`                   | `src/constants/theme.ts`, `src/utils/analytics.ts` |
+| Element                    | Naming Standard              | Location                                                                   | Example                                            |
+| -------------------------- | ---------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------- |
+| Pages / Routes             | kebab-case (`.astro`)        | `src/pages/`                                                               | `src/pages/index.astro`, `src/pages/privacy.astro` |
+| Astro Components           | PascalCase (`.astro`)        | `src/components/ui/`, `src/components/sections/`, or `src/components/seo/` | `HeroSection.astro`, `Navbar.astro`, `SEO.astro`   |
+| React Islands              | PascalCase (`.tsx`)          | `src/components/islands/`                                                  | `PricingCalculator.tsx`, `MobileMenu.tsx`          |
+| Layouts                    | PascalCase (`.astro`)        | `src/layouts/`                                                             | `BaseLayout.astro`                                 |
+| Data / Content Collections | kebab-case (`.json` / `.ts`) | `src/content/` or `src/data/`                                              | `src/data/features.ts`, `src/data/pricing.ts`      |
+| Utilities & Constants      | camelCase (`.ts`)            | `src/utils/` or `src/constants/`                                           | `src/constants/theme.ts`, `src/utils/analytics.ts` |
 
 ## 4. UI, Styling & Design System Rules
 
