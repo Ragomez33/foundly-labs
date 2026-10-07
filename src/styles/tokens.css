@@ -28,4 +28,12 @@
   /* Shadows */
   --shadow-card: 0px 8px 16px rgba(108, 92, 231, 0.05);
   --shadow-fab: 0px 10px 20px rgba(108, 92, 231, 0.35);
+
+  /* Status Semantics (sober, high-contrast) */
+  --color-status-positive-bg: #d1fae5;
+  --color-status-positive-text: #065f46;
+  --color-status-warning-bg: #fef3c7;
+  --color-status-warning-text: #92400e;
+  --color-status-active-bg: #ede9fe;
+  --color-status-active-text: #6d28d9;
 }

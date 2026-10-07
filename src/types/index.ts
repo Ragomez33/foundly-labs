@@ -34,7 +34,12 @@ export interface Application {
   category: string;
   status: string;
   target: string;
+  headline: string;
+  subheadline: string;
   description: string;
+  keyFeature: string;
+  logo: string;
+  icon: string;
 }
 
 export interface NavItem {
@@ -48,4 +53,16 @@ export interface BaseLayoutProps {
   description?: string;
   image?: string;
   canonical?: string;
+}
+
+export interface FooterLink {
+  label: string;
+  href: string;
+  external?: boolean;
+  ariaLabel?: string;
+}
+
+export interface FooterColumn {
+  title: string;
+  links: FooterLink[];
 }
