@@ -31,7 +31,7 @@ of each story.
 
 **Purpose**: Add the build-time dependency used by the crawl story
 
-- [X] T001 Add `@astrojs/sitemap@^3` to `package.json` and install it
+- [x] T001 Add `@astrojs/sitemap@^3` to `package.json` and install it
 
 ---
 
@@ -41,9 +41,9 @@ of each story.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [X] T002 [P] Extend `SiteConfig` with the official `defaultTitle`, official `description`, `defaultImage`, and `parentOrganization` (FORGE Labs) in `src/types/index.ts` and `src/data/siteConfig.ts`; add an `SEOProps` type
-- [X] T003 Create `src/components/seo/SEO.astro` with typed props (`title`, `description`, `image`, `canonicalURL`), default resolution, `<title>`, `<meta name="description">`, and an absolute self-referencing `<link rel="canonical">`
-- [X] T004 Inject `<SEO />` into `src/layouts/BaseLayout.astro` (passing the page props through) and remove the inline title/description/canonical/OG/Twitter tags
+- [x] T002 [P] Extend `SiteConfig` with the official `defaultTitle`, official `description`, `defaultImage`, and `parentOrganization` (FORGE Labs) in `src/types/index.ts` and `src/data/siteConfig.ts`; add an `SEOProps` type
+- [x] T003 Create `src/components/seo/SEO.astro` with typed props (`title`, `description`, `image`, `canonicalURL`), default resolution, `<title>`, `<meta name="description">`, and an absolute self-referencing `<link rel="canonical">`
+- [x] T004 Inject `<SEO />` into `src/layouts/BaseLayout.astro` (passing the page props through) and remove the inline title/description/canonical/OG/Twitter tags
 
 **Checkpoint**: Foundation ready — user story implementation can now begin
 
@@ -59,9 +59,9 @@ that every page has an absolute canonical URL and defaults when inputs are omitt
 
 ### Implementation for User Story 1
 
-- [X] T005 [US1] Register the `@astrojs/sitemap` integration in `astro.config.mjs` (the `site` origin is already set)
-- [X] T006 [P] [US1] Create `public/robots.txt` allowing all agents and advertising `https://foundlylabs.com/sitemap-index.xml`
-- [X] T007 [US1] Verify `dist/sitemap-index.xml` lists `/`, `/privacy/`, `/terms/`, that `dist/robots.txt` allows crawling, and that every built page has one absolute canonical URL and applied defaults
+- [x] T005 [US1] Register the `@astrojs/sitemap` integration in `astro.config.mjs` (the `site` origin is already set)
+- [x] T006 [P] [US1] Create `public/robots.txt` allowing all agents and advertising `https://foundlylabs.com/sitemap-index.xml`
+- [x] T007 [US1] Verify `dist/sitemap-index.xml` lists `/`, `/privacy/`, `/terms/`, that `dist/robots.txt` allows crawling, and that every built page has one absolute canonical URL and applied defaults
 
 **Checkpoint**: User Story 1 fully functional and independently testable
 
@@ -76,9 +76,9 @@ confirm per-page overrides work.
 
 ### Implementation for User Story 2
 
-- [X] T008 [US2] Add Open Graph tags (`og:type=website`, `og:site_name=Foundly Labs`, `og:title`, `og:description`, `og:url`, `og:image`) to `src/components/seo/SEO.astro`
-- [X] T009 [US2] Add Twitter Card tags (`twitter:card=summary_large_image`, `twitter:title`, `twitter:description`, `twitter:image`) and resolve the default image to an absolute URL in `src/components/seo/SEO.astro`
-- [X] T010 [US2] Verify the OG/Twitter tags use the official defaults and that a page-level `title`/`description`/`image` overrides them
+- [x] T008 [US2] Add Open Graph tags (`og:type=website`, `og:site_name=Foundly Labs`, `og:title`, `og:description`, `og:url`, `og:image`) to `src/components/seo/SEO.astro`
+- [x] T009 [US2] Add Twitter Card tags (`twitter:card=summary_large_image`, `twitter:title`, `twitter:description`, `twitter:image`) and resolve the default image to an absolute URL in `src/components/seo/SEO.astro`
+- [x] T010 [US2] Verify the OG/Twitter tags use the official defaults and that a page-level `title`/`description`/`image` overrides them
 
 **Checkpoint**: User Stories 1 and 2 both work independently
 
@@ -94,9 +94,9 @@ Labs and the SoftwareApplication list matches `src/data/apps.ts`, and validate w
 
 ### Implementation for User Story 3
 
-- [X] T011 [US3] Add the `Organization` JSON-LD block (name, url, logo, `parentOrganization` = FORGE Labs) via `<script type="application/ld+json" is:inline set:html={JSON.stringify(...)} />` in `src/components/seo/SEO.astro`
-- [X] T012 [US3] Add the `SoftwareApplication` `ItemList` JSON-LD derived from `src/data/apps.ts` in `src/components/seo/SEO.astro`
-- [X] T013 [US3] Verify both JSON-LD blocks parse/validate with zero errors and that no executable client JavaScript was added
+- [x] T011 [US3] Add the `Organization` JSON-LD block (name, url, logo, `parentOrganization` = FORGE Labs) via `<script type="application/ld+json" is:inline set:html={JSON.stringify(...)} />` in `src/components/seo/SEO.astro`
+- [x] T012 [US3] Add the `SoftwareApplication` `ItemList` JSON-LD derived from `src/data/apps.ts` in `src/components/seo/SEO.astro`
+- [x] T013 [US3] Verify both JSON-LD blocks parse/validate with zero errors and that no executable client JavaScript was added
 
 **Checkpoint**: All user stories independently functional
 
@@ -106,9 +106,9 @@ Labs and the SoftwareApplication list matches `src/data/apps.ts`, and validate w
 
 **Purpose**: Final validation and governance alignment
 
-- [X] T014 Run `npm run check`, `npm run lint`, and `npm run build` and confirm 0 errors/problems and the new build artifacts
-- [X] T015 [P] Validate the structured data with a Schema.org/Rich Results validator and confirm preview tags render
-- [X] T016 [P] Add `src/components/seo/` to the component locations in `code-rules.md` to resolve the structural deviation recorded in the plan
+- [x] T014 Run `npm run check`, `npm run lint`, and `npm run build` and confirm 0 errors/problems and the new build artifacts
+- [x] T015 [P] Validate the structured data with a Schema.org/Rich Results validator and confirm preview tags render
+- [x] T016 [P] Add `src/components/seo/` to the component locations in `code-rules.md` to resolve the structural deviation recorded in the plan
 
 ---
 

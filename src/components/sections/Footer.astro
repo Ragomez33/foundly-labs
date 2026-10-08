@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/branding-logo-fl.png';
+import { footerBrand, footerColumns, footerCopyright, footerPoweredByLabel } from '@/data/footer';
+import { siteConfig } from '@/data/siteConfig';
+---
+
+<footer class="border-border-subtle bg-surface-elevated/60 mt-auto border-t">
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 py-12 md:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <a href="/" aria-label="Foundly Labs" class="inline-flex items-center">
+        <Image src={logo} alt="Foundly Labs" class="h-8 w-auto" />
+      </a>
+      <p class="text-secondary mt-4 max-w-xs text-sm">{footerBrand.copy}</p>
+      <p class="text-muted mt-4 text-sm">
+        {footerBrand.attributionPrefix}{' '}
+        <a
+          href={siteConfig.parentOrganization.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-accent-primary hover:text-accent-primary/80 underline-offset-2 hover:underline"
+        >
+          {footerBrand.attributionLinkLabel}
+        </a>
+        .
+      </p>
+    </div>
+
+    {footerColumns.map((column) => (
+      <div>
+        <h2 class="text-primary text-sm font-semibold">{column.title}</h2>
+        <ul class="mt-4 space-y-2">
+          {column.links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+                aria-label={link.ariaLabel}
+                class="text-secondary hover:text-accent-primary text-sm transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <div class="border-border-subtle/40 mx-auto max-w-7xl border-t px-6 pt-6 pb-8">
+    <div class="text-muted flex flex-col justify-between gap-2 text-xs md:flex-row">
+      <p>{footerCopyright}</p>
+      <p>
+        {footerPoweredByLabel}{' '}
+        <a
+          href={siteConfig.parentOrganization.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-accent-primary underline-offset-2 hover:underline"
+        >
+          {siteConfig.parentOrganization.name}
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
