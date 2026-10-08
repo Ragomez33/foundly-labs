@@ -3,10 +3,12 @@
 # Dependencies
 node_modules/
 
-# Astro / build output
+# Build output (Astro / Next.js)
 dist/
 .astro/
 build/
+.next/
+out/
 
 # Logs
 *.log

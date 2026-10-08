@@ -1,0 +1,67 @@
+/*
+ * Landing — Tailwind v4 theme bridge.
+ * =====================================================================
+ * Los valores canónicos viven en `@foundly/ui/tokens.css` (fuente de verdad,
+ * espejo de specs/system-design.md v3.0.0). Aquí solo se mapean a utilidades
+ * Tailwind mediante `@theme`. No declarar colores de marca crudos aquí.
+ */
+
+@import '@foundly/ui/tokens.css';
+
+@theme {
+  /* Backgrounds & Surfaces */
+  --color-app-body: var(--bg-app-body);
+  --color-header: var(--bg-header);
+  --color-footer: var(--bg-footer);
+  --color-card-light: var(--bg-card-light);
+  --color-card-hover: var(--bg-card-hover);
+  --color-badge-pill: var(--bg-badge-pill);
+  --color-surface-elevated: var(--bg-footer);
+  --color-surface-glass: var(--surface-glass);
+
+  /* Borders */
+  --color-border-subtle: var(--border-subtle);
+  --color-border-lavender: var(--border-lavender);
+
+  /* Brand Primary (Master Accent) */
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-primary-hover: var(--accent-primary-hover);
+  --color-accent-primary-soft: var(--accent-primary-soft);
+  --color-accent-primary-glow: rgba(108, 92, 231, 0.35);
+
+  /* Core Semantics */
+  --color-accent-positive: var(--accent-positive);
+  --color-accent-positive-soft: var(--accent-positive-soft);
+  --color-accent-negative: var(--accent-negative);
+  --color-accent-negative-soft: var(--accent-negative-soft);
+  --color-accent-warning: var(--accent-warning);
+  --color-accent-warning-soft: var(--accent-warning-soft);
+  --color-accent-info: var(--accent-info);
+  --color-accent-info-soft: var(--accent-info-soft);
+
+  /* Domain-Specific Accents */
+  --color-brand-book: var(--brand-book);
+  --color-brand-store: var(--brand-store);
+  --color-brand-pos: var(--brand-pos);
+
+  /* Typography & Text Hierarchy */
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+
+  /* Landing status semantics (derivadas de los tokens core) */
+  --color-status-positive-bg: var(--accent-positive-soft);
+  --color-status-positive-text: #065f46;
+  --color-status-warning-bg: var(--accent-warning-soft);
+  --color-status-warning-text: #92400e;
+  --color-status-active-bg: var(--accent-primary-soft);
+  --color-status-active-text: var(--accent-primary-hover);
+
+  /* Signature top gradient (extensión de la landing) */
+  --color-gradient-from: #c8b6ff;
+  --color-gradient-to: #d8b4fe;
+
+  /* Elevation */
+  --shadow-card: 0px 8px 16px rgba(108, 92, 231, 0.05);
+  --shadow-fab: 0px 10px 20px rgba(108, 92, 231, 0.35);
+}

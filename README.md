@@ -67,8 +67,8 @@ brand hex values (enforced by an ESLint guard in `eslint.config.js`).
 This project follows Spec-Driven Development. See:
 
 - `constitution.md` and `code-rules.md` for the non-negotiable rules
-- `specs/001-project-scaffold/` for the feature spec, plan, and tasks
-- `specs/001-project-scaffold/quickstart.md` for the full validation guide
+- `specs/landing/001-project-scaffold/` for the feature spec, plan, and tasks
+- `specs/landing/001-project-scaffold/quickstart.md` for the full validation guide
 
 Quick validation:
 

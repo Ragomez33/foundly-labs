@@ -1,18 +1,21 @@
-# Foundly Landing Page — Code & TypeScript Standards
+# Foundly Labs — Code & TypeScript Standards
 
-**Version:** 1.0.0 (Landing Web Domain)
-**Scope:** Landing Page (Astro 5 + TypeScript + Tailwind CSS)
-**Status:** Inviolable — Governed by constitution.md
+**Version:** 2.0.0 (Monorepo — Landing Web Domain)
+**Scope:** `apps/landing` (Astro 5 + TypeScript + Tailwind CSS v4). Sirve además como **base de los estándares de TypeScript** para los paquetes compartidos (`packages/ui`, `packages/db`) y las futuras apps (`apps/book`, `apps/store`).
+**Authority:** Inviolable — subordinado a `specs/business-model.md`, `constitution.md` (v4.1.0) y `specs/architecture.md`.
+**Design source of truth:** `specs/system-design.md` v3.0.0 y `packages/ui/src/styles/tokens.css`.
 
 ## 1. Strict Typing Policy
 
 The use of `any`, `unknown` without type guards, or implicit type casting (`as targetType`) is strictly forbidden. All props, data structures, and helper functions must be explicitly typed.
 
+**Monorepo scope:** estas reglas de tipado aplican a `apps/landing` y son la **base obligatoria** para todo el código TypeScript del monorepo, incluidos los paquetes compartidos (`packages/ui`, `packages/db`) y las futuras apps (`apps/book`, `apps/store`).
+
 **Type Location Rules:**
 
 - **Component Props**: Defined inside the Astro component frontmatter or React component file as an `interface Props`.
 - **Content & Data Schemas**: Content collection schemas (pricing plans, features, FAQs, testimonials) must be typed and validated using `astro:content` and `zod`.
-- **Global / Shared Types**: Placed in `src/types/index.ts`.
+- **Global / Shared Types**: Tipos compartidos en `packages/*` (p. ej. `packages/ui`) o en `apps/landing/src/types/index.ts` según su alcance.
 
 ## 2. Astro 5 Architecture & Island Standards
 
@@ -33,28 +36,39 @@ When client-side UI hydration is required, isolate the component in React and as
 
 ### 3.1 Directory Matrix
 
-| Element                    | Naming Standard              | Location                                                                   | Example                                            |
-| -------------------------- | ---------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------- |
-| Pages / Routes             | kebab-case (`.astro`)        | `src/pages/`                                                               | `src/pages/index.astro`, `src/pages/privacy.astro` |
-| Astro Components           | PascalCase (`.astro`)        | `src/components/ui/`, `src/components/sections/`, or `src/components/seo/` | `HeroSection.astro`, `Navbar.astro`, `SEO.astro`   |
-| React Islands              | PascalCase (`.tsx`)          | `src/components/islands/`                                                  | `PricingCalculator.tsx`, `MobileMenu.tsx`          |
-| Layouts                    | PascalCase (`.astro`)        | `src/layouts/`                                                             | `BaseLayout.astro`                                 |
-| Data / Content Collections | kebab-case (`.json` / `.ts`) | `src/content/` or `src/data/`                                              | `src/data/features.ts`, `src/data/pricing.ts`      |
-| Utilities & Constants      | camelCase (`.ts`)            | `src/utils/` or `src/constants/`                                           | `src/constants/theme.ts`, `src/utils/analytics.ts` |
+Rutas relativas a `apps/landing/`, salvo los paquetes compartidos, que viven en `packages/`.
+
+| Element                    | Naming Standard              | Location                                        | Example                                             |
+| -------------------------- | ---------------------------- | ----------------------------------------------- | --------------------------------------------------- |
+| Pages / Routes             | kebab-case (`.astro`)        | `src/pages/`                                    | `src/pages/index.astro`, `src/pages/privacy.astro`  |
+| Astro Sections             | PascalCase (`.astro`)        | `src/components/sections/`                      | `Hero.astro`, `Navbar.astro`, `Footer.astro`        |
+| Astro UI Primitives        | PascalCase (`.astro`)        | `src/components/ui/`                            | `AppCard.astro`, `Badge.astro`, `Button.astro`      |
+| React Islands              | PascalCase (`.tsx`)          | `src/components/islands/`                       | `PricingCalculator.tsx`, `MobileMenu.tsx`           |
+| SEO Components             | PascalCase (`.astro`)        | `src/components/seo/`                           | `SEO.astro`                                         |
+| Layouts                    | PascalCase (`.astro`)        | `src/layouts/`                                  | `BaseLayout.astro`                                  |
+| Data / Content Collections | kebab-case (`.json` / `.ts`) | `src/content/` or `src/data/`                   | `src/data/apps.ts`, `src/content/pricing/`          |
+| Utilities & Constants      | camelCase (`.ts`)            | `src/utils/`                                    | `src/utils/analytics.ts`, `src/utils/formatters.ts` |
+| Shared Packages            | PascalCase / kebab-case      | `packages/ui`, `packages/db`, `packages/config` | `packages/ui/src/index.ts`                          |
 
 ## 4. UI, Styling & Design System Rules
 
 ### 4.1 Tailwind CSS & Brand Tokens
 
-All styling must be driven by Tailwind CSS.
+All styling must be driven by Tailwind CSS and the canonical tokens defined in `packages/ui/src/styles/tokens.css` (source of truth, mirroring `specs/system-design.md` v3.0.0).
 
-- **No Inline Magic Colors**: Colors must map strictly to the design system configured in `tailwind.config.mjs` (matching the Clean Light UI design system):
+- **No Inline Magic Colors**: Colors must map strictly to the design system; hex literals inside components are forbidden (enforced by the ESLint guard). No component may declare a brand color outside these tokens.
   - **Primary Accent**: `bg-accent-primary` (#6C5CE7)
-  - **App Body**: `bg-app-body` (#FAFAFC / #F4F3F8)
+  - **Primary Accent Hover**: `--accent-primary-hover` (#5A4AD1)
+  - **Primary Accent Soft**: `--accent-primary-soft` (#EEECFE)
+  - **App Body**: `bg-app-body` (#FAF8FF)
+  - **Surface Elevated / Footer**: `bg-surface-elevated` (#F1F5F9)
   - **Card Light**: `bg-card-light` (#FFFFFF)
-  - **Top Gradient Accent**: #C8B6FF / #D8B4FE
-  - **Text Primary**: `text-primary` (#1E1B2E)
-  - **Text Secondary**: `text-secondary` (#6B7280)
+  - **Text Primary**: `text-primary` (#0F172A)
+  - **Text Secondary**: `text-secondary` (#475569)
+  - **Text Muted**: `text-muted` (#94A3B8)
+  - **Border Subtle**: `border-subtle` (#E2E8F0)
+  - **Domain Accents**: `--brand-book` (#7C3AED), `--brand-store` (#059669), `--brand-pos` (#2563EB)
+  - **Signature Top Gradient (extensión de la landing)**: #C8B6FF / #D8B4FE
 
 ### 4.2 Card Styling Rule
 
@@ -62,10 +76,12 @@ Cards representing features, testimonials, or pricing tiers must strictly follow
 
 ```html
 <!-- GOOD: Clean Light UI Card Standard -->
-<div class="bg-white border border-[#E6E4F0] rounded-3xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+<div class="bg-white border border-[#E2E8F0] rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow">
   <!-- Content -->
 </div>
 ```
+
+> Nota: el literal `border-[#E2E8F0]` refleja el borde canónico de `specs/system-design.md` v3.0.0. En código de producción se prefiere la utilidad por token `border-border-subtle` (evita valores arbitrarios y satisface el ESLint guard de §4.1).
 
 ## 5. Separation of Content and Components
 

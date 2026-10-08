@@ -1,188 +1,309 @@
 <!--
 Sync Impact Report
 ==================
-Version change: N/A (scaffold sin poblar) -> 3.0.0
-Bump rationale: Población inicial del scaffold de constitución de Spec Kit a partir de la
-  constitución fuente del proyecto (constitution.md v3.0.0, Estado: Binding). No existía una
-  versión previa gestionada por Spec Kit, por lo que se alinea la numeración al documento
-  normativo existente.
+Version change: 4.1.0 -> 5.0.0
+Bump rationale: Enmienda 5.0.0 (MAJOR): redefinición de la arquitectura de especificaciones.
+  Todas las specs residen exclusivamente en la carpeta raíz `/specs`, organizadas por dominio
+  (`shared-ui`, `landing`, `book`, `store`). Se elimina el concepto de "specs locales de app"
+  bajo `apps/*`. Se establece que, antes de ejecutar `/speckit.specify`, la IA DEBE identificar
+  o preguntar explícitamente el dominio. Este documento es un ESPEJO de la constitución
+  canónica de la raíz (`constitution.md` v5.0.0) y debe mantenerse sincronizado con ella.
 
-Modified principles: N/A (primera definición)
+Modified principles:
+  - I. Rule of Law: la jerarquía incluye `specs/architecture.md` y las "specs de dominio".
+  - II. Spec-Driven Development: las specs viven exclusivamente en `/specs/<dominio>/`.
+
 Renamed principles: N/A
-Added principles:
-  - I. Rule of Law (Jerarquía de Autoridad)
-  - II. Spec-Driven Development (SDD)
-  - III. Server-First & Zero-JS Default
-  - IV. Strict Typing (Tipado Estricto)
-  - V. Performance & Core Web Vitals
-  - VI. Clean Light UI Design System
-
 Added sections:
-  - Technical & Platform Constraints
-  - Development Workflow & Quality Gates
-  - Governance
-
-Removed sections: N/A
+  - Estructura de Especificaciones por Dominio
+Removed sections:
+  - Specs Locales (`apps/[app-name]/specs`)
 
 Deferred TODOs:
-  - TODO(VERSION_CONFIRMATION): confirmar si la constitución gestionada por Spec Kit debe
-    conservar el 3.0.0 del documento fuente o reiniciarse en 1.0.0 como primera versión
-    ratificada bajo Spec Kit.
-  - TODO(RATIFICATION_DATE): se asumió 2026-10-05 (fecha del primer commit del repositorio);
-    confirmar la fecha real de ratificación.
+  - TODO(RATIFICATION_DATE): se asumió 2026-10-05 (fecha del primer commit); confirmar.
 -->
 
-# Foundly Labs Constitution
+# Foundly Labs — Constitución de Desarrollo
 
-## Core Principles
+**Versión:** 5.0.0
+**Estado:** Binding
+**Ámbito:** Monorepo del ecosistema Foundly Labs (landing, book, store)
+**Stack Base:** Astro 5 (SSG, Server-First Islands) · Next.js / React 19 (SaaS) · Tailwind CSS v4 · TypeScript estricto
+**Metodología:** Spec-Driven Development (SDD)
 
-### I. Rule of Law (Jerarquía de Autoridad)
+## 1. Jerarquía de Autoridad (Rule of Law)
 
-En caso de cualquier ambigüedad, contradicción o conflicto técnico o funcional durante el
-desarrollo, se aplica estrictamente el siguiente orden de jerarquía de autoridad:
+En caso de cualquier ambigüedad, contradicción o conflicto técnico o funcional durante el desarrollo, se aplica estrictamente el siguiente orden de jerarquía de autoridad:
 
-$$\text{specs/business-model.md} \gt \text{constitution.md} \gt \text{code-rules.md} \gt \text{specs locales de feature}$$
+$$
+\text{specs/business-model.md} \gt \text{constitution.md} \gt \text{specs/architecture.md} \gt \text{code-rules.md} \gt \text{specs de dominio}
+$$
 
-- `specs/business-model.md`: define el pricing, bundles, propuesta de valor de la marca y las
-  reglas del ecosistema Foundly Labs.
-- `constitution.md` (este documento): define los principios no negociables de arquitectura,
-  calidad, diseño y flujo de trabajo.
-- `code-rules.md`: define las normas de código TypeScript, Astro, CSS y estructura de componentes.
-- Specs locales de feature (`specs/features/<feature>.md`): especifican el comportamiento detallado
-  de cada vista, isla interactiva o flujo.
+- **`specs/business-model.md`**: define el pricing, bundles, propuesta de valor de la marca y las reglas del ecosistema Foundly Labs. Es de referencia **obligatoria** para cualquier spec, plan o implementación.
+- **`constitution.md`** (este documento): define los principios no negociables de arquitectura, calidad, diseño y flujo de trabajo.
+- **`specs/architecture.md`**: define la topología del monorepo, límites entre apps y paquetes, y las decisiones de arquitectura vigentes.
+- **`code-rules.md`**: define las normas de código TypeScript, Astro, React/Next.js, CSS y estructura de componentes.
+- **`specs de dominio`** (`/specs/<dominio>/<nnn>-<feature>/`): especifican el comportamiento detallado de cada vista, isla interactiva o flujo, **acotadas a un único dominio** (`shared-ui`, `landing`, `book` o `store`).
 
-Ninguna decisión de implementación puede violar un nivel superior de esta jerarquía. Ante
-conflicto entre dos documentos, prevalece el de mayor autoridad.
+Ninguna decisión de implementación puede violar un nivel superior de esta jerarquía. Ante conflicto entre dos documentos, prevalece el de mayor autoridad.
 
-Rationale: garantiza una única fuente de verdad y desambigua las decisiones durante todo el ciclo
-de desarrollo.
+## 2. Estructura de Especificaciones por Dominio
 
-### II. Spec-Driven Development (SDD)
+Todas las especificaciones del proyecto residen **exclusivamente** en la carpeta raíz `/specs`, organizadas en subdirectorios por dominio. **No existen specs locales bajo `apps/*` ni `packages/*`.**
 
-- "No spec, no code": ninguna línea de código de producción o refactorización mayor DEBE escribirse
-  sin que exista una especificación previa aprobada en el directorio `specs/`.
-- El flujo de desarrollo DEBE seguir secuencialmente: Spec (EARS) → Plan de Arquitectura → Tareas →
-  Implementación.
+### I. Dominios de especificación
 
-Rationale: asegura trazabilidad requisito→implementación y evita trabajo no acordado.
+| Dominio     | Ruta                | Alcance                                                                               |
+| ----------- | ------------------- | ------------------------------------------------------------------------------------- |
+| `shared-ui` | `/specs/shared-ui/` | Design system y paquetes compartidos (`packages/ui`, `packages/config`, `packages/db`) |
+| `landing`   | `/specs/landing/`   | Vitrina pública `apps/landing` (Astro 5, SSG)                                          |
+| `book`      | `/specs/book/`      | Módulo SaaS interactivo `apps/book` (Next.js / React 19)                              |
+| `store`     | `/specs/store/`     | Módulo de comercio `apps/store` (Next.js / React 19)                                  |
 
-### III. Server-First & Zero-JS Default
+Cada especificación de dominio vive en `/specs/<dominio>/<nnn>-<feature>/` y usa numeración secuencial **dentro de su propio dominio**.
 
-- Todo el maquetado, estructura de información, textos, ventajas SEO y activos estáticos DEBEN
-  renderizarse como HTML puro generado en servidor o build time.
-- Las islas de interactividad (`client:*`) DEBEN usar la directiva de hidratación mínima necesaria:
+### II. Documentos globales
+
+Los documentos de gobernanza transversal (no ligados a un dominio) residen en la raíz de `/specs`:
+
+- `specs/business-model.md` — pricing, bundles, licencias y propuesta de valor.
+- `specs/architecture.md` — topología del monorepo y límites entre apps/paquetes.
+- `specs/system-design.md` — sistema de diseño y paleta canónica.
+- `constitution.md` y `code-rules.md` — en la raíz del repositorio.
+
+### III. Reglas de las specs de dominio
+
+- **Ubicación única**: ninguna spec puede residir fuera de `/specs/<dominio>/`.
+- **Regla previa a `/speckit.specify`**: antes de ejecutar cualquier comando `/speckit.specify`, la IA DEBE identificar el dominio de la nueva especificación. Si el usuario no lo especificó, la IA DEBE preguntarlo explícitamente antes de crear nada. Dominios válidos: `shared-ui`, `landing`, `book`, `store`. La spec DEBE crearse con `SPECIFY_FEATURE_DIRECTORY=specs/<dominio>/<nnn>-<feature>`.
+- **Acotadas a un dominio**: solo aplican al dominio que las contiene.
+- **Subordinadas**: NUNCA pueden contradecir `specs/business-model.md`, `constitution.md`, `specs/architecture.md` ni `code-rules.md`.
+- **Sin duplicación normativa**: si una regla aplica a más de un dominio, DEBE promoverse a un documento global en `/specs` o a `shared-ui`, nunca duplicarse.
+- **Referencia obligatoria**: toda spec DEBE referenciar explícitamente `specs/business-model.md` y declarar qué decisiones de esa jerarquía superior respeta.
+- **Resolución de conflictos**: ante contradicción, prevalece siempre el documento de mayor autoridad según el Principio 1.
+
+## 3. Estructura del Monorepo
+
+El repositorio se organiza como **monorepo** con dos espacios: `apps/` (aplicaciones desplegables) y `packages/` (código compartido).
+
+```text
+/
+├── apps/                                  # Aplicaciones desplegables
+│   ├── landing/                           # Astro 5 + Tailwind v4 (SSG)
+│   │   ├── public/                        # Assets de branding, favicons, robots
+│   │   ├── src/
+│   │   │   ├── assets/                    # Assets locales procesados por Astro
+│   │   │   ├── components/
+│   │   │   │   ├── ui/                    # Primitivos estáticos (AppCard, Badge, Button)
+│   │   │   │   ├── sections/              # Secciones de landing (Navbar, Hero, AppsGrid…)
+│   │   │   │   ├── islands/               # Islas React (.tsx) hidratables
+│   │   │   │   └── seo/                   # Componentes SEO (SEO.astro)
+│   │   │   ├── content/                   # Content collections (pricing, faqs, features)
+│   │   │   ├── data/                      # Constantes estáticas (siteConfig, apps…)
+│   │   │   ├── layouts/                   # BaseLayout.astro
+│   │   │   ├── pages/                     # Rutas (index, privacy, terms)
+│   │   │   ├── styles/                    # tokens.css + global.css
+│   │   │   ├── types/                     # Tipos compartidos de la app
+│   │   │   └── utils/                     # Formateadores y helpers
+│   │   └── astro.config.mjs
+│   │
+│   ├── book/                              # Next.js / React 19 (SaaS interactivo)
+│   │   ├── src/                           # app/ (router), components/, lib/, server/
+│   │   ├── public/
+│   │   └── next.config.mjs
+│   │
+│   └── store/                             # Next.js / React 19 (SaaS interactivo)
+│       ├── src/
+│       ├── public/
+│       └── next.config.mjs
+│
+├── packages/                              # Código compartido del monorepo
+│   ├── ui/                                # Design system Clean Light UI (componentes reutilizables)
+│   ├── db/                                # Capa de datos y esquemas (Drizzle) compartidos
+│   └── config/                            # Configuración compartida (eslint, tsconfig, prettier, tailwind)
+│
+├── specs/                                 # TODAS las specs, organizadas por dominio
+│   ├── business-model.md                  # Gobernanza global
+│   ├── architecture.md                    # Gobernanza global
+│   ├── system-design.md                   # Gobernanza global
+│   ├── shared-ui/                         # Specs de paquetes compartidos / design system
+│   ├── landing/                           # Specs de apps/landing
+│   ├── book/                              # Specs de apps/book
+│   └── store/                             # Specs de apps/store
+├── constitution.md                        # Documento raíz (este archivo)
+├── code-rules.md
+└── package.json                           # Raíz del workspace
+```
+
+### I. Stack por aplicación
+
+| App             | Framework          | Render                          | Rol                                                        |
+| --------------- | ------------------ | ------------------------------- | ---------------------------------------------------------- |
+| `apps/landing`  | Astro 5            | SSG (estático)                  | Vitrina pública del ecosistema, SEO y performance          |
+| `apps/book`     | Next.js / React 19 | Módulo SaaS interactivo         | Flujos de producto con estado y datos en tiempo de petición |
+| `apps/store`    | Next.js / React 19 | Módulo SaaS interactivo         | Comercio/licencias y flujos transaccionales                 |
+
+- **`apps/landing`**: Astro 5 + Tailwind CSS v4, salida estática (SSG), cero JS por defecto y islas React solo cuando son estrictamente necesarias.
+- **`apps/book` y `apps/store`**: Next.js con React 19, orientadas a módulos SaaS interactivos; pueden usar Server Components, Server Actions y capa de datos vía `packages/db`.
+
+### II. Paquetes compartidos (`packages/`)
+
+- **`packages/ui`**: componentes y tokens del design system Clean Light UI reutilizables entre apps.
+- **`packages/db`**: esquemas, migraciones y acceso a datos (p. ej. Drizzle) para las apps SaaS.
+- **`packages/config`**: configuración base compartida (ESLint, TypeScript, Prettier, Tailwind).
+
+Reglas de los paquetes:
+
+- El código compartido vive únicamente en `packages/`; se prohíbe duplicar la misma lógica entre apps.
+- Los paquetes NO pueden depender de una app concreta (`packages/*` nunca importa desde `apps/*`).
+- Las dependencias entre paquetes DEBEN ser acíclicas.
+
+## 4. Gobernanza del Código (`code-rules.md`)
+
+`code-rules.md` es el archivo de gobernanza y la referencia normativa obligatoria para la escritura de código en todo el monorepo. Toda contribución debe cumplirlo estrictamente.
+
+- **Ámbito**: tipado estricto, arquitectura por app (Astro islas / Next.js), convenciones de nombres y ubicación, sistema de diseño/Tailwind, separación de contenido y componentes, desempeño y formularios.
+- **Carácter**: inviolable. Dentro de la jerarquía se subordina únicamente a `specs/business-model.md`, a `constitution.md` y a `specs/architecture.md`.
+- **Obligación**: antes de escribir o modificar código de producción, consulta `code-rules.md` y verifica que la implementación cumple cada regla aplicable.
+
+## 5. Principios Técnicos & Arquitectura
+
+### I. Spec-Driven Development (SDD) Obligatorio
+
+- "No spec, no code": ninguna línea de código de producción o refactorización mayor debe escribirse sin una especificación previa aprobada.
+- Toda spec DEBE **referenciar explícitamente `specs/business-model.md`**, ya que es la máxima autoridad del ecosistema.
+- El flujo es secuencial: **Spec (EARS) → Plan de Arquitectura → Tareas → Implementación**.
+- Todas las specs residen exclusivamente en `/specs/<dominio>/` (`shared-ui`, `landing`, `book`, `store`); los documentos transversales viven en la raíz de `/specs`. Antes de `/speckit.specify` la IA DEBE identificar o preguntar el dominio.
+
+### II. Server-First & Zero-JS Default
+
+- **`apps/landing`**: todo el maquetado, estructura, textos, ventajas SEO y activos estáticos se renderizan como HTML en build time. La interactividad se limita a islas (`client:*`).
+- Directivas de hidratación (mínima necesaria):
   - `client:load`: reservado únicamente para el Hero principal.
-  - `client:visible`: para componentes interactivos fuera del viewport inicial (calculadoras de
-    precios, modal de licencias, demos de productos).
-  - `client:idle`: para widgets secundarios o analíticas.
-  - `client:media`: para elementos condicionales de renderizado según el viewport.
+  - `client:visible`: componentes interactivos fuera del viewport inicial (calculadoras, modales, demos).
+  - `client:idle`: widgets secundarios o analíticas.
+  - `client:media`: elementos condicionales según el viewport.
+- **`apps/book` y `apps/store`**: priorizar Server Components; el JavaScript de cliente se justifica por interacción real (formularios, tablas, gráficos, tiempo real).
 
-Rationale: minimiza el JavaScript enviado al cliente y maximiza el desempeño y la accesibilidad.
+### III. Desempeño & Core Web Vitals
 
-### IV. Strict Typing (Tipado Estricto)
+- **Objetivo**: 100/100 en Google Lighthouse Desktop y ≥ 98 en Mobile para Performance, Accessibility y SEO en toda app pública.
+- Los lienzos 3D / WebGL deben encapsularse en componentes aislados y destruir explícitamente sus contextos (`dispose()`) al desmontar para evitar fugas de memoria.
 
-- La configuración de TypeScript DEBE mantener `strict: true` y `noImplicitAny: true`.
-- Se prohíbe el uso de `any` y los casteos implícitos tipo `as targetType`; todo prop, estado o
-  contrato de datos DEBE estar tipado explícitamente mediante interfaces o schemas de Zod.
+### IV. Tipado Estricto
 
-Rationale: elimina errores en tiempo de ejecución y hace explícitos los contratos de datos.
+- La configuración de TypeScript debe mantener `strict: true` y `noImplicitAny: true` en todo el monorepo.
+- Se prohíbe el uso de `any` y los casteos implícitos (`as targetType`); todo prop, estado o contrato de datos debe estar tipado mediante interfaces o schemas de Zod.
+- Los tipos globales compartidos viven en `packages/*` o en `src/types/` según su alcance.
 
-### V. Performance & Core Web Vitals
+## 6. Guía de Diseño, Estética & Sistema de Tokens (Clean Light UI)
 
-- El objetivo DEBE ser 100/100 en Google Lighthouse Desktop y ≥ 98 en Mobile para Performance,
-  Accessibility y SEO.
-- Los lienzos 3D o interactivos DEBEN encapsularse en componentes aislados y destruir
-  explícitamente sus contextos de WebGL (`dispose()`) al desmontar, para evitar fugas de memoria en
-  dispositivos móviles.
+La interfaz hereda la línea de diseño limpia, clara y de alto contraste de Foundly POS, proyectando una marca unificada (Lavender-to-White Body) en todas las apps.
 
-Rationale: el desempeño es un requisito de producto, no una optimización posterior.
+### I. Paleta de Colores & Tokens
 
-### VI. Clean Light UI Design System
-
-- La interfaz DEBE heredar la línea de diseño limpia, clara y de alto contraste de Foundly POS
-  (Lavender-to-White Body), proyectando una marca unificada.
-- Superficie de tarjetas: fondo blanco puro (#FFFFFF), borde fino lavanda (1px solid #E6E4F0),
-  radio de 20px y sombra suave suspendida.
-- Pills y badges: radio completo (9999px), fondo lavanda claro (#F0EEF9) y texto acentuado en
-  púrpura (#6C5CE7).
-- Icon containers: contenedores circulares con fondo #F0EEF9 e iconos en #6C5CE7.
-- Cifras y números: alineación numérica tabular (`tabular-nums`) y peso tipográfico 700.
-- Los colores DEBEN mapear estrictamente al sistema de diseño (`tailwind.config.mjs`); se prohíben
-  los colores mágicos inline.
-
-Rationale: preserva la consistencia visual y la identidad de marca en todo el ecosistema.
-
-## Technical & Platform Constraints
-
-- **Stack base**: Astro 5 (Server-First Islands Architecture) + CSS Modules/Tokens + WebGL / Canvas
-  + GSAP.
-- **Metodología**: Spec-Driven Development (SDD).
-- **Sistema de tokens** (Clean Light UI):
+La paleta canónica del ecosistema es la de **`specs/system-design.md` v3.0.0** y su fuente de verdad ejecutable es **`packages/ui/src/styles/tokens.css`**. Ningún componente puede declarar colores fuera de estos tokens.
 
 ```css
 :root {
-  --bg-gradient-top: linear-gradient(180deg, #C8B6FF 0%, #D8B4FE 100%);
-  --bg-app-body: #FAFAFC;
-  --bg-card-light: #FFFFFF;
-  --bg-surface-elevated: #F4F3F8;
-  --bg-badge-pill: #F0EEF9;
-  --accent-primary: #6C5CE7;
-  --accent-primary-glow: rgba(108, 92, 231, 0.35);
-  --accent-positive: #10B981;
-  --accent-negative: #EF4444;
-  --accent-gold: #F59E0B;
-  --text-primary: #1E1B2E;
-  --text-secondary: #6B7280;
-  --text-muted: #9CA3AF;
-  --border-subtle: #E6E4F0;
-  --border-lavender: #DCD8EC;
+  /* Backgrounds & Surfaces */
+  --bg-app-body: #faf8ff;
+  --bg-header: #ffffff;
+  --bg-footer: #f1f5f9;
+  --bg-card-light: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-badge-pill: #f1f5f9;
+  --border-subtle: #e2e8f0;
+  --border-lavender: #cbd5e1;
+  --surface-glass: rgba(255, 255, 255, 0.85);
+
+  /* Brand Primary (Master Accent) */
+  --accent-primary: #6c5ce7;
+  --accent-primary-hover: #5a4ad1;
+  --accent-primary-soft: #eeecfe;
+
+  /* Core Semantics */
+  --accent-positive: #10b981;
+  --accent-positive-soft: #d1fae5;
+  --accent-negative: #ef4444;
+  --accent-negative-soft: #fee2e2;
+  --accent-warning: #f59e0b;
+  --accent-warning-soft: #fef3c7;
+  --accent-info: #3b82f6;
+  --accent-info-soft: #dbeafe;
+
+  /* Domain-Specific Accents (App Identity) */
+  --brand-book: #7c3aed;
+  --brand-store: #059669;
+  --brand-pos: #2563eb;
+
+  /* Typography & Text */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  /* Borders & Shadows */
   --shadow-card: 0px 8px 16px rgba(108, 92, 231, 0.05);
   --shadow-fab: 0px 10px 20px rgba(108, 92, 231, 0.35);
 }
 ```
 
-- **Estructura del repositorio**:
+> Las extensiones propias de una app (p. ej. el degradado superior de la landing) NO se declaran aquí; viven en los tokens locales de esa app, siempre derivadas de estos valores.
 
-```text
-/
-├── public/                     # Isologotipos, assets de branding y favicons
-├── src/
-│   ├── components/             # Componentes Astro de servidor (0 KB JS)
-│   ├── islands/                # Islas de interactividad cliente (React / Vanilla TS)
-│   ├── layouts/                # BaseLayout (SEO, OpenGraph, fuentes, tokens)
-│   ├── pages/                  # Rutas (index.astro, pass.astro)
-│   ├── styles/                 # tokens.css y global.css
-│   └── utils/                  # Schemas Zod, formateadores
-├── specs/                      # Documentación SDD (business-model, constitution, code-rules)
-└── astro.config.mjs
-```
+### II. Normas de Composición Visual & Cards
 
-- Las reglas detalladas de escritura de código viven en `code-rules.md` y son de cumplimiento
-  obligatorio.
+- **Superficie de tarjetas**: fondo blanco puro (#FFFFFF), bordes ultra-finos lavanda (1px solid #E6E4F0), radio 20px (`rounded-3xl`) y sombras suaves suspendidas.
+- **Pills & Badges**: radio completo (`rounded-full`), fondo lavanda claro (#F0EEF9) y texto acentuado en púrpura (#6C5CE7).
+- **Icon Containers**: contenedores circulares con fondo lavanda claro (#F0EEF9) e iconos en púrpura de marca (#6C5CE7).
+- **Cifras y Números**: alineación tabular (`tabular-nums`) y peso tipográfico 700 (Bold).
+- **Tokens**: los colores deben mapear estrictamente al sistema de diseño (`packages/ui` / `tailwind.config.mjs`); se prohíben los colores mágicos inline.
 
-## Development Workflow & Quality Gates
+## 7. Convenciones de Rutas y Nombres (Normalizado)
 
-- **Gobernanza de código**: `code-rules.md` es el archivo normativo obligatorio para la escritura
-  de código. Antes de escribir o modificar código de producción, se DEBE consultar y cumplir cada
-  regla aplicable.
-- **Convención de commits**:
-  - `feat(scope)`: implementación de nuevas vistas o islas descritas en specs.
-  - `fix(scope)`: corrección de fallas o estilos.
-  - `spec(scope)`: creación o modificación de especificaciones en `specs/`.
-  - `style(scope)`: ajustes puramente estéticos o de tokens CSS.
-- **Validación pre-commit**: todo commit DEBE pasar exitosamente el linter (eslint), la verificación
-  de tipos (`astro check`) y compilar sin advertencias.
+Estas rutas son las canónicas; cualquier documento que use otras rutas debe corregirse.
 
-## Governance
+| Elemento                     | Ruta canónica                                                    | Convención            |
+| ---------------------------- | ---------------------------------------------------------------- | --------------------- |
+| Islas interactivas (Astro)   | `apps/landing/src/components/islands/`                           | PascalCase (`.tsx`)   |
+| Secciones (Astro)            | `apps/landing/src/components/sections/`                          | PascalCase (`.astro`) |
+| Primitivos UI (Astro)        | `apps/landing/src/components/ui/`                                | PascalCase (`.astro`) |
+| Componentes SEO              | `apps/landing/src/components/seo/`                               | PascalCase (`.astro`) |
+| Layouts                      | `apps/landing/src/layouts/`                                      | PascalCase (`.astro`) |
+| Páginas / rutas              | `apps/landing/src/pages/`                                        | kebab-case (`.astro`) |
+| Componentes compartidos      | `packages/ui/`                                                    | PascalCase            |
+| Datos / content collections  | `apps/landing/src/data/` y `apps/landing/src/content/`           | kebab-case            |
+| Schemas / acceso a datos     | `packages/db/`                                                    | camelCase / kebab-case |
+| Configuración compartida     | `packages/config/`                                                | kebab-case            |
+| Specs de dominio             | `/specs/<dominio>/` (`shared-ui`, `landing`, `book`, `store`)     | `nnn-feature`         |
+| Documentos globales          | `/specs/` (raíz)                                                  | kebab-case            |
 
-- Esta constitución SUPERA cualquier otra práctica. `code-rules.md` se subordina a ella y a
-  `specs/business-model.md` según la jerarquía de autoridad del Principio I.
-- **Enmiendas**: toda enmienda DEBE documentarse, aprobarse por el responsable del proyecto e
-  incluir un plan de migración cuando afecte código existente.
-- **Versionado**: se aplica versionado semántico. MAJOR por eliminación o redefinición incompatible
-  de principios; MINOR por adición o expansión material de principios o secciones; PATCH por
-  aclaraciones o correcciones no semánticas.
-- **Cumplimiento**: toda revisión (PR) DEBE verificar el cumplimiento de esta constitución y de
-  `code-rules.md`; toda complejidad añadida DEBE justificarse explícitamente.
+> **Corrección explícita**: la carpeta real de islas es `src/components/islands/` y las secciones son `src/components/sections/`. Se elimina cualquier referencia previa a `src/islands/` o a componentes de sección sueltos en la raíz de `components/`.
 
-**Version**: 3.0.0 | **Ratified**: 2026-10-05 | **Last Amended**: 2026-10-05
+## 8. Convención de Commits y Flujo de Trabajo
+
+### Convención de Commits
+
+- `feat(scope)`: implementación de nuevas vistas o islas descritas en specs.
+- `fix(scope)`: corrección de fallas o estilos.
+- `spec(scope)`: creación o modificación de especificaciones en `/specs/<dominio>/`.
+- `style(scope)`: ajustes puramente estéticos o de tokens CSS.
+- `chore(scope)`: cambios de workspace, paquetes o tooling del monorepo.
+
+### Validación Pre-Commit
+
+- Todo commit debe pasar exitosamente el linter (ESLint), la verificación de tipos (`astro check` / `tsc`) y compilar sin advertencias.
+- La validación se ejecuta por app afectada y sobre los paquetes compartidos modificados.
+
+## 9. Gobernanza y Cumplimiento
+
+- Esta constitución SUPERA cualquier otra práctica que no provenga de `specs/business-model.md`; `code-rules.md` y las specs de dominio se subordinan a ella según la jerarquía del Principio 1.
+- Las specs de dominio NUNCA pueden contradecir la constitución ni los documentos globales de `/specs`; ante conflicto, prevalece el documento de mayor autoridad.
+- Toda decisión de implementación DEBE referenciar `specs/business-model.md`.
+- **Enmiendas**: toda enmienda debe documentarse, aprobarse por el responsable del proyecto e incluir un plan de migración cuando afecte código existente.
+- **Versionado**: semántico. MAJOR por eliminación o redefinición incompatible de principios; MINOR por adición o expansión material; PATCH por aclaraciones o correcciones no semánticas.
+- **Cumplimiento**: toda revisión (PR) debe verificar el cumplimiento de esta constitución, `code-rules.md`, `specs/architecture.md` y `specs/business-model.md`.
+
+---
+
+Foundly Labs Constitution — "Local-First, Agile Commerce, Zero Compromise."
+
+**Version**: 5.0.0 | **Ratified**: 2026-10-05 | **Last Amended**: 2026-10-08

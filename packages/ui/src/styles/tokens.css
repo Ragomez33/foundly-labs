@@ -1,0 +1,49 @@
+/*
+ * @foundly/ui — Design Tokens (Clean Light UI)
+ * =====================================================================
+ * FUENTE DE VERDAD VISUAL del ecosistema Foundly Labs.
+ * Espeja 1:1 `specs/system-design.md` v3.0.0 (Ecosystem Core).
+ *
+ * Reglas:
+ *  - Consumir siempre estas variables; prohibido usar colores mágicos inline.
+ *  - Las apps mapean estos tokens a su herramienta (Tailwind @theme, MUI theme, etc.).
+ *  - No renombrar las variables canónicas sin enmienda en specs/system-design.md.
+ */
+
+:root {
+  /* Backgrounds & Surfaces */
+  --bg-app-body: #faf8ff; /* Fondo global neutro con matiz lavanda suave */
+  --bg-header: #ffffff; /* Header limpio blanco puro */
+  --bg-footer: #f1f5f9; /* Footer claro neutro */
+  --bg-card-light: #ffffff; /* Superficie base para tarjetas, editores y modales */
+  --bg-card-hover: #f8fafc; /* Estado hover para tarjetas e ítems interactivos */
+  --bg-badge-pill: #f1f5f9; /* Fondo suave para badges y etiquetas */
+  --border-subtle: #e2e8f0; /* Color de bordes y separadores globales */
+  --border-lavender: #cbd5e1; /* Borde secundario lavanda/zinc */
+  --surface-glass: rgba(255, 255, 255, 0.85); /* Overlay claro con backdrop-blur */
+
+  /* Brand Primary (Master Accent) */
+  --accent-primary: #6c5ce7; /* Neon Lavender / Primary Foundly Accent */
+  --accent-primary-hover: #5a4ad1;
+  --accent-primary-soft: #eeecfe; /* Fondo suave lavanda para selección/focus */
+
+  /* Core Semantics */
+  --accent-positive: #10b981; /* Emerald: Confirmaciones, Pago Exitoso, En Stock */
+  --accent-positive-soft: #d1fae5;
+  --accent-negative: #ef4444; /* Crimson: Citas Canceladas, Agotado, Errores */
+  --accent-negative-soft: #fee2e2;
+  --accent-warning: #f59e0b; /* Amber: Pendiente de Confirmación, Poco Stock */
+  --accent-warning-soft: #fef3c7;
+  --accent-info: #3b82f6; /* Electric Blue: Información de Cita / Envío */
+  --accent-info-soft: #dbeafe;
+
+  /* Domain-Specific Accents (App Identity) */
+  --brand-book: #7c3aed; /* Purple/Violet: Agendas, Reservas y Citas */
+  --brand-store: #059669; /* Emerald Green: E-commerce, Ventas y Catálogo */
+  --brand-pos: #2563eb; /* Royal Blue: Punto de Venta Local-First */
+
+  /* Typography & Text Hierarchy */
+  --text-primary: #0f172a; /* Slate oscuro de máximo contraste sobre blanco */
+  --text-secondary: #475569; /* Gris medio-oscuro para subtítulos y descripciones */
+  --text-muted: #94a3b8; /* Gris claro para placeholders y labels secundarios */
+}

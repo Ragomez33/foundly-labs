@@ -6,7 +6,14 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist/', '.astro/', 'node_modules/', 'coverage/', 'build/'],
+    ignores: [
+      '**/dist/',
+      '**/.astro/',
+      '**/node_modules/',
+      '**/coverage/',
+      '**/build/',
+      '**/.next/',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -20,19 +27,22 @@ export default [
     },
   },
   {
-    files: ['src/components/**/*.{astro,jsx,tsx,ts,js}'],
+    files: [
+      'apps/*/src/components/**/*.{astro,jsx,tsx,ts,js}',
+      'packages/ui/src/**/*.{tsx,ts,jsx,js}',
+    ],
     rules: {
       'no-restricted-syntax': [
         'error',
         {
           selector: 'Literal[value=/#[0-9a-fA-F]{3,8}/]',
           message:
-            'No uses colores hex literales en componentes; usa los tokens de diseno de src/styles/tokens.css.',
+            'No uses colores hex literales en componentes; usa los tokens de diseno del sistema (@foundly/ui / tokens.css).',
         },
         {
           selector: 'TemplateElement[value.raw=/#[0-9a-fA-F]{3,8}/]',
           message:
-            'No uses colores hex literales en componentes; usa los tokens de diseno de src/styles/tokens.css.',
+            'No uses colores hex literales en componentes; usa los tokens de diseno del sistema (@foundly/ui / tokens.css).',
         },
       ],
     },
