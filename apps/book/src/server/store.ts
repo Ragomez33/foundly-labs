@@ -8,6 +8,7 @@ import type {
   TimeBlock,
 } from '../domain/appointments/types';
 import type { BusinessHours, OnboardingProvision, Tenant, User } from '../domain/tenancy/types';
+import type { Session } from './auth';
 
 /**
  * In-memory store for the admin panel (mock state).
@@ -25,6 +26,7 @@ export interface BookStore {
   tenants: Tenant[];
   users: User[];
   onboardingProvisions: OnboardingProvision[];
+  sessions: Session[];
 }
 
 const TIMEZONE = 'Europe/Madrid';
@@ -46,6 +48,7 @@ function seed(): BookStore {
     type: 'professional',
     active: true,
     timezone: TIMEZONE,
+    tenantId: 'ten-ana',
   };
   const service: Service = {
     id: 'svc-corte',
@@ -55,6 +58,7 @@ function seed(): BookStore {
     bufferMinutes: 10,
     category: 'Peluquería',
     active: true,
+    tenantId: 'ten-ana',
   };
   const rate: Rate = {
     id: 'rate-corte',
@@ -101,6 +105,11 @@ function seed(): BookStore {
     status: 'active',
     createdAt: NOW,
   };
+  const ownerSession: Session = {
+    userId: owner.id,
+    role: 'admin',
+    tenantId: tenant.id,
+  };
 
   return {
     resources: [resource],
@@ -113,6 +122,7 @@ function seed(): BookStore {
     tenants: [tenant],
     users: [owner],
     onboardingProvisions: [],
+    sessions: [ownerSession],
   };
 }
 
@@ -138,6 +148,7 @@ export function resetStore(options: { seed?: boolean } = {}): void {
           tenants: [],
           users: [],
           onboardingProvisions: [],
+          sessions: [],
         }
       : seed();
 }

@@ -13,6 +13,7 @@ export function provisionDefaults(tenant: Tenant): ProvisionedDefaults {
     type: 'professional',
     active: true,
     timezone: tenant.timezone,
+    tenantId: tenant.id,
   };
 
   const rules: AvailabilityRule[] = tenant.businessHours
@@ -36,6 +37,7 @@ export function provisionDefaults(tenant: Tenant): ProvisionedDefaults {
     bufferMinutes: 0,
     category: tenant.category,
     active: true,
+    tenantId: tenant.id,
   };
 
   return { resource, rules, service };

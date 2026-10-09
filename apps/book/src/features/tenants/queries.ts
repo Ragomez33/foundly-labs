@@ -1,4 +1,6 @@
+import { redirect } from 'next/navigation';
 import type { Tenant } from '../../domain/tenancy/types';
+import { getCurrentSession, requireTenant } from '../../server/auth';
 import { getStore } from '../../server/store';
 import { fail, ok, type ActionResult } from '../../server/result';
 import type { Session } from '../../server/auth';
@@ -18,4 +20,16 @@ export function getCurrentTenant(session: Session | null): ActionResult<Tenant> 
     return fail('NOT_FOUND', 'Negocio no encontrado.');
   }
   return ok(tenant);
+}
+
+/**
+ * Tenant id for admin pages, sourced from the session (never the URL).
+ * Redirects unauthenticated requests to the registration entry point (FR-016).
+ */
+export function getAdminTenantId(): string {
+  const auth = requireTenant(getCurrentSession());
+  if (!auth.ok || !auth.data.tenantId) {
+    redirect('/onboarding');
+  }
+  return auth.data.tenantId;
 }

@@ -1,4 +1,5 @@
 import type { ErrorCode } from './result';
+import { getStore } from './store';
 import { fail, type ActionResult } from './result';
 
 export type Role = 'admin' | 'professional';
@@ -35,6 +36,16 @@ export function requireTenant(session: Session | null): ActionResult<Session> {
     return fail('FORBIDDEN', 'La sesión no está asociada a un negocio.');
   }
   return { ok: true, data: session };
+}
+
+/**
+ * Active session for the current request (mock seam).
+ * Resolves from the store's `sessions` collection; when Foundly Pass SSO ships,
+ * only this function changes.
+ */
+export function getCurrentSession(): Session | null {
+  const session = getStore().sessions[0];
+  return session ?? null;
 }
 
 export function isActionError(value: unknown): value is { ok: false; error: { code: ErrorCode } } {

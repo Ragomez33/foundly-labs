@@ -14,6 +14,8 @@ export interface Resource {
   type: ResourceType;
   active: boolean;
   timezone: string;
+  /** The tenant (business) that owns this resource. */
+  tenantId: string;
 }
 
 export interface Service {
@@ -24,6 +26,8 @@ export interface Service {
   bufferMinutes: number;
   category: string | null;
   active: boolean;
+  /** The tenant (business) that owns this service. */
+  tenantId: string;
 }
 
 export interface Rate {

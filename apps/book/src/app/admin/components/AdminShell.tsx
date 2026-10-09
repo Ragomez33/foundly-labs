@@ -22,6 +22,8 @@ const DRAWER_WIDTH = 264;
 
 export interface AdminShellProps {
   children: ReactNode;
+  /** The active business shown in the footer user profile (US3). */
+  tenantName?: string;
 }
 
 /**
@@ -29,7 +31,7 @@ export interface AdminShellProps {
  * drawer on small viewports), the module navigation and the Clean Light UI
  * lavender canvas for the routed screens.
  */
-export function AdminShell({ children }: AdminShellProps) {
+export function AdminShell({ children, tenantName }: AdminShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleOpen = () => setMobileOpen(true);
   const handleClose = () => setMobileOpen(false);
@@ -53,7 +55,7 @@ export function AdminShell({ children }: AdminShellProps) {
           },
         }}
       >
-        <DrawerContent />
+        <DrawerContent tenantName={tenantName} />
       </Drawer>
 
       <Drawer
@@ -66,7 +68,7 @@ export function AdminShell({ children }: AdminShellProps) {
           '& .MuiDrawer-paper': { width: DRAWER_WIDTH, boxSizing: 'border-box' },
         }}
       >
-        <DrawerContent onNavigate={handleClose} />
+        <DrawerContent tenantName={tenantName} onNavigate={handleClose} />
       </Drawer>
 
       <Stack sx={{ flexGrow: 1, minWidth: 0 }}>
@@ -136,7 +138,7 @@ function MobileBar({ onOpen }: { onOpen: () => void }) {
   );
 }
 
-function DrawerContent({ onNavigate }: { onNavigate?: () => void }) {
+function DrawerContent({ onNavigate, tenantName }: { onNavigate?: () => void; tenantName?: string }) {
   const pathname = usePathname();
 
   return (
@@ -178,7 +180,7 @@ function DrawerContent({ onNavigate }: { onNavigate?: () => void }) {
 
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
-      <UserFooter />
+      <UserFooter tenantName={tenantName} />
     </Stack>
   );
 }
@@ -221,7 +223,7 @@ function NavListItem({
   );
 }
 
-function UserFooter() {
+function UserFooter({ tenantName }: { tenantName?: string }) {
   return (
     <Stack direction="row" spacing={1.5} alignItems="center" sx={{ px: 2.5, py: 2 }}>
       <Avatar
@@ -240,6 +242,11 @@ function UserFooter() {
         <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
           Raúl Gómez
         </Typography>
+        {tenantName ? (
+          <Typography variant="caption" noWrap>
+            {tenantName}
+          </Typography>
+        ) : null}
         <Typography variant="caption" color="text.secondary" noWrap>
           Administrador
         </Typography>

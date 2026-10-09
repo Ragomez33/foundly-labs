@@ -18,6 +18,7 @@ describe('ServiceCatalog', () => {
               bufferMinutes: 0,
               category: null,
               active: true,
+              tenantId: 't1',
             },
           ]}
           rates={[

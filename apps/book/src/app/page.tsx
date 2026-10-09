@@ -1,20 +1,13 @@
 import type { Metadata } from 'next';
+import { ProductLanding } from './components/ProductLanding';
+import { BOOK_CTA, BOOK_FEATURES, BOOK_HERO } from './book-product';
 
 export const metadata: Metadata = {
   title: 'Foundly Book',
-  description: 'Información del producto Foundly Book y registro de negocios.',
+  description: BOOK_HERO.subtitle,
 };
 
-/**
- * Product page (public `/book`). Placeholder for the MVP;
- * the full landing (features + CTA) ships with User Story 4.
- */
+/** Product page (public `/book`): module capabilities + register CTA (FR-001/FR-002). */
 export default function HomePage() {
-  return (
-    <main>
-      <h1>Foundly Book</h1>
-      <p>Gestión de agendas, servicios y citas para tu negocio.</p>
-      <p>Landing informativa en construcción.</p>
-    </main>
-  );
+  return <ProductLanding hero={BOOK_HERO} cta={BOOK_CTA} features={BOOK_FEATURES} />;
 }

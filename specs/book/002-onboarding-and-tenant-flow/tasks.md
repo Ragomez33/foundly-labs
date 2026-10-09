@@ -85,16 +85,16 @@ Single location: `apps/book/`. New surfaces live under `src/app/` (routes) with 
 
 ### Tests for User Story 2 (write FIRST)
 
-- [ ] T020 [P] [US2] Portal query tests `apps/book/src/features/public-booking/queries.test.ts`: active tenant resolves, `draft`/`suspended`/unknown resolve to an "unavailable" outcome with zero data exposed; offered slots respect business hours and existing appointments (reuses the 001 availability engine).
-- [ ] T021 [P] [US2] Booking action tests `apps/book/src/features/public-booking/actions.test.ts`: creates an appointment with `origin: 'online'` and initial `pending` status; booking an already-taken slot returns `CONFLICT`.
-- [ ] T022 [P] [US2] Portal component test `apps/book/src/features/public-booking/components/BookingPanel.test.tsx`: slot selection + confirm flow, `vitest-axe` clean.
+- [x] T020 [P] [US2] Portal query tests `apps/book/src/features/public-booking/queries.test.ts`: active tenant resolves, `draft`/`suspended`/unknown resolve to an "unavailable" outcome with zero data exposed; offered slots respect business hours and existing appointments (reuses the 001 availability engine).
+- [x] T021 [P] [US2] Booking action tests `apps/book/src/features/public-booking/actions.test.ts`: creates an appointment with `origin: 'online'` and initial `pending` status; booking an already-taken slot returns `CONFLICT`.
+- [x] T022 [P] [US2] Portal component test `apps/book/src/features/public-booking/components/BookingPanel.test.tsx`: slot selection + confirm flow, `vitest-axe` clean.
 
 ### Implementation for User Story 2
 
-- [ ] T023 [P] [US2] Implement `apps/book/src/features/public-booking/queries.ts`: `getPublicBusiness(slug)` (only `active`/licensed tenants per `data-model.md` §6–§7) and `getOfferedSlots(tenantId, serviceId, dateRange)` reusing `domain/availability/computeAvailability.ts`.
-- [ ] T024 [P] [US2] Implement `apps/book/src/features/public-booking/actions.ts`: `bookAppointment` using the existing conflict re-check, creating an `Appointment` with `origin: 'online'` (data-model.md §6 of 001) and returning `CONFLICT` on overlap.
-- [ ] T025 [US2] Build the portal components `TenantPublicHeader`, `ServiceList` and `BookingPanel` in `apps/book/src/features/public-booking/components/` using `@foundly/ui` primitives (guest booking, no account required).
-- [ ] T026 [US2] Build `apps/book/src/app/[tenantSlug]/page.tsx` as a Server Component: resolve the tenant, render the portal or the "not available" state for unknown/draft/suspended tenants with no business data exposed.
+- [x] T023 [P] [US2] Implement `apps/book/src/features/public-booking/queries.ts`: `getPublicBusiness(slug)` (only `active`/licensed tenants per `data-model.md` §6–§7) and `getOfferedSlots(tenantId, serviceId, dateRange)` reusing `domain/availability/computeAvailability.ts`.
+- [x] T024 [P] [US2] Implement `apps/book/src/features/public-booking/actions.ts`: `bookAppointment` using the existing conflict re-check, creating an `Appointment` with `origin: 'online'` (data-model.md §6 of 001) and returning `CONFLICT` on overlap.
+- [x] T025 [US2] Build the portal components `TenantPublicHeader`, `ServiceList` and `BookingPanel` in `apps/book/src/features/public-booking/components/` using `@foundly/ui` primitives (guest booking, no account required).
+- [x] T026 [US2] Build `apps/book/src/app/[tenantSlug]/page.tsx` as a Server Component: resolve the tenant, render the portal or the "not available" state for unknown/draft/suspended tenants with no business data exposed.
 
 **Checkpoint**: User Stories 1 and 2 both work independently.
 
@@ -108,14 +108,14 @@ Single location: `apps/book/`. New surfaces live under `src/app/` (routes) with 
 
 ### Tests for User Story 3 (write FIRST)
 
-- [ ] T027 [P] [US3] Isolation tests `apps/book/src/features/tenants/queries.test.ts`: a session of tenant A cannot resolve tenant B data and `getCurrentTenant` returns the session's tenant (SC-008).
-- [ ] T028 [P] [US3] Guard test `apps/book/src/app/admin/layout.test.tsx`: rendering `/admin/*` without a session redirects to `/onboarding` (FR-016).
+- [x] T027 [P] [US3] Isolation tests `apps/book/src/features/tenants/queries.test.ts`: a session of tenant A cannot resolve tenant B data and `getCurrentTenant` returns the session's tenant (SC-008).
+- [x] T028 [P] [US3] Guard test `apps/book/src/app/admin/layout.test.tsx`: rendering `/admin/*` without a session redirects to `/onboarding` (FR-016).
 
 ### Implementation for User Story 3
 
-- [ ] T029 [US3] Apply `requireTenant` in `apps/book/src/app/admin/layout.tsx`: unauthenticated requests redirect to `/onboarding`; render `AdminShell` only for a valid session (depends on T007).
-- [ ] T030 [US3] Scope the existing 001 reads to the session tenant: add tenant filtering to `apps/book/src/features/appointments/queries.ts` (`listAgenda`, `listAvailabilityRules`, `listTimeBlocks`) and the services page, sourcing `tenantId` from `getCurrentTenant(session)` (C4).
-- [ ] T031 [US3] Surface the current business in the shell: show `Tenant.name` in the `AdminShell` footer beside the user profile (`apps/book/src/app/admin/components/AdminShell.tsx`).
+- [x] T029 [US3] Apply `requireTenant` in `apps/book/src/app/admin/layout.tsx`: unauthenticated requests redirect to `/onboarding`; render `AdminShell` only for a valid session (depends on T007).
+- [x] T030 [US3] Scope the existing 001 reads to the session tenant: add tenant filtering to `apps/book/src/features/appointments/queries.ts` (`listAgenda`, `listAvailabilityRules`, `listTimeBlocks`) and the services page, sourcing `tenantId` from `getCurrentTenant(session)` (C4).
+- [x] T031 [US3] Surface the current business in the shell: show `Tenant.name` in the `AdminShell` footer beside the user profile (`apps/book/src/app/admin/components/AdminShell.tsx`).
 
 **Checkpoint**: User Stories 1–3 all work independently; tenant isolation is enforced.
 
@@ -129,11 +129,11 @@ Single location: `apps/book/`. New surfaces live under `src/app/` (routes) with 
 
 ### Tests for User Story 4 (write FIRST)
 
-- [ ] T032 [P] [US4] Product page test `apps/book/src/app/page.test.tsx`: renders the module capabilities and a CTA linking to `/onboarding` (FR-002), `vitest-axe` clean.
+- [x] T032 [P] [US4] Product page test `apps/book/src/app/page.test.tsx`: renders the module capabilities and a CTA linking to `/onboarding` (FR-002), `vitest-axe` clean.
 
 ### Implementation for User Story 4
 
-- [ ] T033 [US4] Build the product landing on `apps/book/src/app/page.tsx` (features, CTA to `/onboarding`) composed exclusively from `@foundly/ui` primitives; any pricing/licensing copy must respect `specs/business-model.md` (no unratified prices, FR-019).
+- [x] T033 [US4] Build the product landing on `apps/book/src/app/page.tsx` (features, CTA to `/onboarding`) composed exclusively from `@foundly/ui` primitives; any pricing/licensing copy must respect `specs/business-model.md` (no unratified prices, FR-019).
 
 **Checkpoint**: All user stories independently functional.
 
@@ -143,10 +143,10 @@ Single location: `apps/book/`. New surfaces live under `src/app/` (routes) with 
 
 **Purpose**: Improvements that affect multiple user stories.
 
-- [ ] T034 [P] Document the module in `apps/book/README.md` (routes, onboarding wizard, public portal, tenant scoping, persistence deferred).
-- [ ] T035 [P] Add a reserved-slug + routing sanity check to `specs/book/002-onboarding-and-tenant-flow/quickstart.md` validation scenario list.
-- [ ] T036 Run the `quickstart.md` validation: `npm run test -w @foundly/book`, `npm run lint`, `npm run build -w @foundly/book` all green.
-- [ ] T037 [P] (Optional) Add agenda-pagination note and reserve a future E2E spec `apps/book/e2e/onboarding.spec.ts`.
+- [x] T034 [P] Document the module in `apps/book/README.md` (routes, onboarding wizard, public portal, tenant scoping, persistence deferred).
+- [x] T035 [P] Add a reserved-slug + routing sanity check to `specs/book/002-onboarding-and-tenant-flow/quickstart.md` validation scenario list.
+- [x] T036 Run the `quickstart.md` validation: `npm run test -w @foundly/book`, `npm run lint`, `npm run build -w @foundly/book` all green.
+- [x] T037 [P] (Optional) Add agenda-pagination note and reserve a future E2E spec `apps/book/e2e/onboarding.spec.ts`.
 
 ---
 

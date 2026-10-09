@@ -72,6 +72,14 @@ npm run lint && npm run test -w @foundly/book
 
 Expected: all four surfaces compose `@foundly/ui`; every flow is keyboard-operable; automated a11y checks report zero critical violations.
 
+### 6. Reserved slugs & routing sanity check (FR-006, contracts/routes.contract.md)
+
+```bash
+npm run test -w @foundly/book -- tenancy
+```
+
+Expected: reserved slugs (`admin`, `onboarding`, `api`, `www`, `app`, `public`, `static`, `assets`) and invalid formats are rejected at registration and never render a business portal; static segments (`/`, `/onboarding`, `/admin/*`) take precedence over the dynamic `[tenantSlug]` segment, and `/admin/*` redirects unauthenticated requests to `/onboarding`.
+
 ## Manual acceptance scenarios
 
 1. Open `/` and confirm the product page explains the module and its call to action leads to `/onboarding`.
