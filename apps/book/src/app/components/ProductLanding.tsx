@@ -58,7 +58,7 @@ function BrandBar({
       }}
     >
       <Link href="/" aria-label="Foundly Book — inicio" style={{ display: 'flex' }}>
-        <Image src="/branding-logo.png" alt="Foundly Book" width={100} height={50} priority />
+        <Image src="/branding-logo.png" alt="Foundly Book" width={140} height={70} priority />
       </Link>
       <Stack direction="row" spacing={1.5} alignItems="center">
         <Typography
