@@ -4,9 +4,10 @@ export interface ProductFeature {
 }
 
 export const BOOK_HERO = {
-  title: 'Foundly Book',
+  title: 'Tu agenda en piloto automático',
   subtitle:
-    'Agendas, servicios, profesionales y citas en un solo lugar — y un portal público donde tus clientes reservan online.',
+    'Gestiona citas, servicios y profesionales desde un solo panel, y deja que tus clientes reserven online a cualquier hora, incluso cuando estás cerrado.',
+  badge: 'Reservas online 24/7',
 } as const;
 
 export const BOOK_CTA = {
@@ -16,24 +17,40 @@ export const BOOK_CTA = {
 
 export const BOOK_DEMO = {
   href: '/estudio-ana',
-  label: 'Ver portal de ejemplo',
+  label: 'Ver Demo',
 } as const;
 
-export const BOOK_FEATURES: ProductFeature[] = [
+export const BOOK_BENEFITS: ProductFeature[] = [
   {
-    title: 'Agenda',
-    description: 'Gestiona tus citas, evita dobles reservas y controla el estado de cada visita.',
+    title: 'Agendamiento 24/7',
+    description: 'Tus clientes reservan cuando quieran, sin llamadas ni mensajes fuera de horario.',
   },
   {
-    title: 'Servicios',
-    description: 'Catálogo de servicios con duración y tarifas siempre actualizadas.',
+    title: 'Recordatorios',
+    description: 'Reduce las ausencias manteniendo a cada cliente al día antes de su cita.',
   },
   {
-    title: 'Disponibilidad',
-    description: 'Define horarios de trabajo, descansos y bloqueos por profesional.',
+    title: 'Control de disponibilidad',
+    description: 'Define horarios de trabajo, descansos y bloques por cada profesional.',
   },
   {
-    title: 'Portal público',
-    description: 'Tus clientes reservan online desde tu URL pública, sin intermediarios.',
+    title: 'Perfil personalizado',
+    description: 'Tu marca, tus servicios y tu URL pública en un portal a tu medida.',
   },
 ];
+
+export const BOOK_INDUSTRIES = [
+  'Salud',
+  'Belleza',
+  'Consultoría',
+  'Deportes',
+  'Educación',
+  'Servicios profesionales',
+] as const;
+
+export const BOOK_FINAL_CTA = {
+  eyebrow: 'Empieza en 3 pasos',
+  title: 'Crea tu negocio en minutos',
+  subtitle: 'Cuenta · Negocio · Configuración — y listo para recibir citas.',
+  cta: { href: '/onboarding', label: 'Crear mi negocio gratis' },
+} as const;
