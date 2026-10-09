@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Card, DataTable, type DataTableColumn } from '@foundly/ui';
+import { Badge, Card, DataTable, Stack, Typography, type DataTableColumn } from '@foundly/ui';
 import type { Rate, Service } from '../../../domain/appointments/types';
 
 export interface ServiceCatalogProps {
@@ -36,7 +36,18 @@ export function ServiceCatalog({ services, rates }: ServiceCatalogProps) {
   ];
 
   return (
-    <Card header={<h1>Servicios y tarifas</h1>}>
+    <Card
+      header={
+        <Stack spacing={0.5}>
+          <Typography variant="h5" component="h1">
+            Servicios y tarifas
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Catálogo de servicios, duraciones y tarifas del negocio.
+          </Typography>
+        </Stack>
+      }
+    >
       <DataTable
         columns={columns}
         rows={services}

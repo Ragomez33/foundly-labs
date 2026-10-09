@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Chip, DataTable, type DataTableColumn } from '@foundly/ui';
+import { Card, Chip, DataTable, Stack, Typography, type DataTableColumn } from '@foundly/ui';
 import type { AvailabilityRule, TimeBlock } from '../../../domain/appointments/types';
 
 export interface AvailabilityEditorProps {
@@ -26,14 +26,29 @@ export function AvailabilityEditor({ rules, blocks }: AvailabilityEditorProps) {
   ];
 
   return (
-    <Card header={<h1>Disponibilidad</h1>}>
-      <DataTable
-        columns={columns}
-        rows={rules}
-        emptyMessage="Sin horarios de trabajo definidos"
-        getRowKey={(rule) => rule.id}
-      />
-      <p>{blocks.length} bloqueo(s) de horario configurados.</p>
+    <Card
+      header={
+        <Stack spacing={0.5}>
+          <Typography variant="h5" component="h1">
+            Disponibilidad
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Horarios de trabajo, descansos y bloqueos por recurso.
+          </Typography>
+        </Stack>
+      }
+    >
+      <Stack spacing={2}>
+        <DataTable
+          columns={columns}
+          rows={rules}
+          emptyMessage="Sin horarios de trabajo definidos"
+          getRowKey={(rule) => rule.id}
+        />
+        <Typography variant="body2" color="text.secondary">
+          {blocks.length} bloqueo(s) de horario configurados.
+        </Typography>
+      </Stack>
     </Card>
   );
 }

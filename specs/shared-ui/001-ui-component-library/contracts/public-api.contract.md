@@ -21,6 +21,11 @@ export { AlertDialog } from './components/AlertDialog';
 export { DataTable } from './components/DataTable';
 export { Chip } from './components/Chip';
 export { TextField } from './components/TextField';
+
+// Layout & typography
+export { Typography } from './components/Typography';
+export { Container } from './components/Container';
+export { Stack } from './components/Stack';
 ```
 
 ## Provider contract
@@ -38,16 +43,19 @@ interface FoundlyThemeProviderProps {
 
 ## Primitive prop contracts (summary)
 
-| Primitive | Required props | Key optional props | Variants / states |
-| --------- | -------------- | ------------------ | ----------------- |
-| `Button` | `children` | `variant`, `loading`, `disabled`, `startIcon`, `endIcon` | primary, secondary, destructive; default/hover/disabled/loading |
-| `Card` | `children` | `header`, `media`, `actions`, `elevated` | — |
-| `Badge` | `children` | `status`, `pill`, `icon` | positive, negative, warning, info, neutral |
-| `Modal` | `open`, `onClose`, `title`, `children` | `actions`, `disableBackdropClose`, `disableEscapeClose` | open/closed lifecycle |
-| `AlertDialog` | `open`, `onConfirm`, `onCancel`, `title` | `description`, `confirmLabel`, `cancelLabel`, `tone` | default/destructive |
-| `DataTable` | `columns`, `rows` | `emptyMessage`, `onRowClick`, `dense` | default/empty |
-| `Chip` | `label` | `onDelete`, `selectable`, `selected`, `color` | default/selectable/removable |
-| `TextField` | — | `label`, `helperText`, `error`, `value`, `onChange` | default/focus/error/disabled |
+| Primitive     | Required props                           | Key optional props                                       | Variants / states                                               |
+| ------------- | ---------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------- |
+| `Button`      | `children`                               | `variant`, `loading`, `disabled`, `startIcon`, `endIcon` | primary, secondary, destructive; default/hover/disabled/loading |
+| `Card`        | `children`                               | `header`, `media`, `actions`, `elevated`                 | —                                                               |
+| `Badge`       | `children`                               | `status`, `pill`, `icon`                                 | positive, negative, warning, info, neutral                      |
+| `Modal`       | `open`, `onClose`, `title`, `children`   | `actions`, `disableBackdropClose`, `disableEscapeClose`  | open/closed lifecycle                                           |
+| `AlertDialog` | `open`, `onConfirm`, `onCancel`, `title` | `description`, `confirmLabel`, `cancelLabel`, `tone`     | default/destructive                                             |
+| `DataTable`   | `columns`, `rows`                        | `emptyMessage`, `onRowClick`, `dense`                    | default/empty                                                   |
+| `Chip`        | `label`                                  | `onDelete`, `selectable`, `selected`, `color`            | default/selectable/removable                                    |
+| `TextField`   | —                                        | `label`, `helperText`, `error`, `value`, `onChange`      | default/focus/error/disabled                                    |
+| `Typography`  | —                                        | `variant`, `component`, `color`, `sx`                    | MUI typography variants                                         |
+| `Container`   | —                                        | `maxWidth`, `sx`                                         | MUI max-widths                                                  |
+| `Stack`       | —                                        | `direction`, `spacing`, `component`, `sx`                | MUI flex layout                                                 |
 
 ## Rules
 

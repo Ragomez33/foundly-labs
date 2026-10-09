@@ -1,3 +1,5 @@
+import '@foundly/ui/tokens.css';
+
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { FoundlyThemeProvider } from '@foundly/ui';
 import type { Metadata } from 'next';
@@ -12,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <body>
-        <AppRouterCacheProvider>
+        <AppRouterCacheProvider options={{ key: 'foundly' }}>
           <FoundlyThemeProvider>{children}</FoundlyThemeProvider>
         </AppRouterCacheProvider>
       </body>

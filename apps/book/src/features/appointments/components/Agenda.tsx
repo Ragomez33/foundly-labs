@@ -1,6 +1,15 @@
 'use client';
 
-import { Badge, Card, DataTable, type BadgeStatus, type DataTableColumn } from '@foundly/ui';
+import {
+  Badge,
+  Button,
+  Card,
+  DataTable,
+  Stack,
+  Typography,
+  type BadgeStatus,
+  type DataTableColumn,
+} from '@foundly/ui';
 
 export interface AgendaRow {
   id: string;
@@ -47,7 +56,16 @@ export function Agenda({ appointments }: AgendaProps) {
   ];
 
   return (
-    <Card header={<h1>Agenda</h1>}>
+    <Card
+      header={
+        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
+          <Typography variant="h5" component="h1">
+            Agenda
+          </Typography>
+          <Button variant="primary">Nueva cita</Button>
+        </Stack>
+      }
+    >
       <DataTable
         columns={columns}
         rows={appointments}
