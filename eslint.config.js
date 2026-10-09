@@ -13,6 +13,7 @@ export default [
       '**/coverage/',
       '**/build/',
       '**/.next/',
+      '**/next-env.d.ts',
     ],
   },
   js.configs.recommended,

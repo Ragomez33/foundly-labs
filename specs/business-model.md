@@ -37,12 +37,12 @@
 
 El ecosistema se compone de módulos SaaS. Cada módulo es una aplicación desplegable con specs locales propias (`apps/[app]/specs`), subordinadas a esta visión y a `constitution.md`.
 
-| Módulo               | Dominio                          | Arquitectura técnica                    | Estado               |
-| -------------------- | -------------------------------- | --------------------------------------- | -------------------- |
-| **Foundly Finance**  | Contabilidad / finanzas base     | Mobile (Expo) — local-first             | En desarrollo        |
-| **Foundly POS**      | Punto de venta                   | Local-first — Drizzle + SQLite          | Beta activa          |
-| **Foundly Book**     | Agendas, servicios y citas       | Next.js / React 19 — SaaS interactivo   | En desarrollo        |
-| **Foundly Store**    | E-commerce e inventario cloud    | Next.js / React 19 — SaaS interactivo   | En desarrollo        |
+| Módulo              | Dominio                       | Arquitectura técnica                  | Estado        |
+| ------------------- | ----------------------------- | ------------------------------------- | ------------- |
+| **Foundly Finance** | Contabilidad / finanzas base  | Mobile (Expo) — local-first           | En desarrollo |
+| **Foundly POS**     | Punto de venta                | Local-first — Drizzle + SQLite        | Beta activa   |
+| **Foundly Book**    | Agendas, servicios y citas    | Next.js / React 19 — SaaS interactivo | En desarrollo |
+| **Foundly Store**   | E-commerce e inventario cloud | Next.js / React 19 — SaaS interactivo | En desarrollo |
 
 ### 2.1 Foundly Finance
 
@@ -97,7 +97,7 @@ El ecosistema se compone de módulos SaaS. Cada módulo es una aplicación despl
   - Inventario y stock sincronizado.
   - Pedidos y flujo de compra.
   - Delivery y seguimiento de entregas.
-- **Arquitectura**: Next.js / React 19 (SaaS interactivo, cloud-first) sobre `packages/db`.
+- **Arquitectura**: Next.js / React 19 (SaaS interactivo, cloud-first). Almacenamiento no definido (pendiente de ratificar).
 - **Interconexiones**: comparte inventario con POS y consolida ingresos en Finance.
 
 ### 2.5 Módulos complementarios del ecosistema
@@ -124,12 +124,12 @@ El cliente adquiere únicamente los módulos que necesita.
 - **Independencia**: un módulo funciona de forma autónoma sin requerir otros módulos.
 - **Escalabilidad**: el cliente puede añadir módulos en cualquier momento sin migraciones destructivas.
 
-| Módulo           | Métrica de licencia       | Ciclo                 | Precio | Estado       |
-| ---------------- | ------------------------- | --------------------- | ------ | ------------ |
-| Foundly Finance  | Por cuenta                | Mensual / Anual       | TBD    | A ratificar  |
-| Foundly POS      | Por negocio / dispositivo | Mensual / Anual       | TBD    | A ratificar  |
-| Foundly Book     | Por profesional / agenda  | Mensual / Anual       | TBD    | A ratificar  |
-| Foundly Store    | Por tienda / volumen      | Mensual / Anual       | TBD    | A ratificar  |
+| Módulo          | Métrica de licencia       | Ciclo           | Precio | Estado      |
+| --------------- | ------------------------- | --------------- | ------ | ----------- |
+| Foundly Finance | Por cuenta                | Mensual / Anual | TBD    | A ratificar |
+| Foundly POS     | Por negocio / dispositivo | Mensual / Anual | TBD    | A ratificar |
+| Foundly Book    | Por profesional / agenda  | Mensual / Anual | TBD    | A ratificar |
+| Foundly Store   | Por tienda / volumen      | Mensual / Anual | TBD    | A ratificar |
 
 > Los importes concretos se documentan y ratifican aquí antes de publicarse en la landing (`apps/landing`). Ninguna UI puede mostrar precios no ratificados en este documento.
 
@@ -172,11 +172,11 @@ Foundly Pass actúa como **proveedor de identidad único** del ecosistema.
 
 ### 4.2 Bundles
 
-| Bundle          | Incluye                                          | Modelo               |
-| --------------- | ------------------------------------------------ | -------------------- |
-| Módulo único    | 1 módulo a elección                              | Suscripción          |
-| Foundly Suite   | Finance + POS + Book + Store                     | Pago unificado       |
-| Add-ons         | Integraciones, delivery, servicios profesionales | A ratificar          |
+| Bundle        | Incluye                                          | Modelo         |
+| ------------- | ------------------------------------------------ | -------------- |
+| Módulo único  | 1 módulo a elección                              | Suscripción    |
+| Foundly Suite | Finance + POS + Book + Store                     | Pago unificado |
+| Add-ons       | Integraciones, delivery, servicios profesionales | A ratificar    |
 
 ### 4.3 Criterios de precio
 
@@ -192,7 +192,7 @@ Este documento determina y condiciona:
 
 - **La landing (`apps/landing`)**: toda sección de precios, bundles o Foundly Pass deriva de esta visión; ningún precio se inventa en la UI.
 - **Las apps SaaS (`apps/book`, `apps/store`)**: sus flujos comerciales y de licencia respetan el esquema Foundly Pass.
-- **Los paquetes (`packages/ui`, `packages/db`, `packages/config`)**: el design system y la capa de datos soportan la identidad centralizada (SSO) y los módulos del ecosistema.
+- **Los paquetes (`packages/ui`, `packages/config`)**: el design system y la configuración compartida soportan la identidad centralizada (SSO) y los módulos del ecosistema.
 - **Toda spec** (global o local) DEBE referenciar este documento y declarar qué decisiones de negocio respeta, según `constitution.md`.
 
 ---

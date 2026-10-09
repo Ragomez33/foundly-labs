@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/book/:path*", "destination": "https://foundly-book.vercel.app/:path*" },
+    { "source": "/store/:path*", "destination": "https://foundly-store.vercel.app/:path*" },
+    { "source": "/:path*", "destination": "https://foundly-landing.vercel.app/:path*" }
+  ]
+}

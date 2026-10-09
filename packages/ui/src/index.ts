@@ -1,12 +1,9 @@
 /**
- * @foundly/ui — Design system Clean Light UI compartido.
+ * @foundly/ui — Clean Light UI design system.
  *
- * Punto de entrada del paquete. Los componentes visuales reutilizables
- * (primitivos React y, cuando aplique, componentes MUI re-estilizados)
- * se exportan desde aquí hacia las apps del monorepo.
+ * Single public entrypoint. Consumers import the theme provider, the theme
+ * builder and the base primitives from here only (contracts/public-api.contract.md).
  */
 
-export const UI_PACKAGE_NAME = '@foundly/ui';
-
-// Exportaciones de componentes compartidos (pendiente de implementación).
-// export { Button } from './components/Button';
+export * from './theme';
+export * from './components';

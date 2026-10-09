@@ -1,0 +1,36 @@
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import type { ReactNode } from 'react';
+import { RADIUS } from '../../theme';
+
+export interface CardProps {
+  children?: ReactNode;
+  header?: ReactNode;
+  media?: ReactNode;
+  actions?: ReactNode;
+  elevated?: boolean;
+}
+
+export function Card({ children, header, media, actions, elevated = false }: CardProps) {
+  return (
+    <Paper
+      elevation={0}
+      sx={(theme) => ({
+        backgroundColor: theme.palette.surface.cardLight,
+        border: `1px solid ${theme.palette.border.subtle}`,
+        borderRadius: `${RADIUS.container}px`,
+        boxShadow: elevated ? theme.palette.shadow.fab : theme.palette.shadow.card,
+        overflow: 'hidden',
+      })}
+    >
+      {media ? <Box>{media}</Box> : null}
+      {header ? <Box sx={{ px: 3, pt: 3 }}>{header}</Box> : null}
+      <Box sx={{ p: 3 }}>{children}</Box>
+      {actions ? (
+        <Box sx={{ px: 3, pb: 3, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+          {actions}
+        </Box>
+      ) : null}
+    </Paper>
+  );
+}

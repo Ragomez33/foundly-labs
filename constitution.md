@@ -1,6 +1,6 @@
 # Foundly Labs — Constitución de Desarrollo
 
-**Versión:** 5.0.0
+**Versión:** 5.0.1
 **Estado:** Binding
 **Ámbito:** Monorepo del ecosistema Foundly Labs (landing, book, store)
 **Stack Base:** Astro 5 (SSG, Server-First Islands) · Next.js / React 19 (SaaS) · Tailwind CSS v4 · TypeScript estricto
@@ -28,12 +28,12 @@ Todas las especificaciones del proyecto residen **exclusivamente** en la carpeta
 
 ### I. Dominios de especificación
 
-| Dominio     | Ruta                | Alcance                                                                               |
-| ----------- | ------------------- | ------------------------------------------------------------------------------------- |
-| `shared-ui` | `/specs/shared-ui/` | Design system y paquetes compartidos (`packages/ui`, `packages/config`, `packages/db`) |
-| `landing`   | `/specs/landing/`   | Vitrina pública `apps/landing` (Astro 5, SSG)                                          |
-| `book`      | `/specs/book/`      | Módulo SaaS interactivo `apps/book` (Next.js / React 19)                              |
-| `store`     | `/specs/store/`     | Módulo de comercio `apps/store` (Next.js / React 19)                                  |
+| Dominio     | Ruta                | Alcance                                                                 |
+| ----------- | ------------------- | ----------------------------------------------------------------------- |
+| `shared-ui` | `/specs/shared-ui/` | Design system y paquetes compartidos (`packages/ui`, `packages/config`) |
+| `landing`   | `/specs/landing/`   | Vitrina pública `apps/landing` (Astro 5, SSG)                           |
+| `book`      | `/specs/book/`      | Módulo SaaS interactivo `apps/book` (Next.js / React 19)                |
+| `store`     | `/specs/store/`     | Módulo de comercio `apps/store` (Next.js / React 19)                    |
 
 Cada especificación de dominio vive en `/specs/<dominio>/<nnn>-<feature>/` y usa numeración secuencial **dentro de su propio dominio**.
 
@@ -93,7 +93,6 @@ El repositorio se organiza como **monorepo** con dos espacios: `apps/` (aplicaci
 │
 ├── packages/                              # Código compartido del monorepo
 │   ├── ui/                                # Design system Clean Light UI (componentes reutilizables)
-│   ├── db/                                # Capa de datos y esquemas (Drizzle) compartidos
 │   └── config/                            # Configuración compartida (eslint, tsconfig, prettier, tailwind)
 │
 ├── specs/                                 # TODAS las specs, organizadas por dominio
@@ -111,19 +110,18 @@ El repositorio se organiza como **monorepo** con dos espacios: `apps/` (aplicaci
 
 ### I. Stack por aplicación
 
-| App             | Framework          | Render                          | Rol                                                        |
-| --------------- | ------------------ | ------------------------------- | ---------------------------------------------------------- |
-| `apps/landing`  | Astro 5            | SSG (estático)                  | Vitrina pública del ecosistema, SEO y performance          |
-| `apps/book`     | Next.js / React 19 | Módulo SaaS interactivo         | Flujos de producto con estado y datos en tiempo de petición |
-| `apps/store`    | Next.js / React 19 | Módulo SaaS interactivo         | Comercio/licencias y flujos transaccionales                 |
+| App            | Framework          | Render                  | Rol                                                         |
+| -------------- | ------------------ | ----------------------- | ----------------------------------------------------------- |
+| `apps/landing` | Astro 5            | SSG (estático)          | Vitrina pública del ecosistema, SEO y performance           |
+| `apps/book`    | Next.js / React 19 | Módulo SaaS interactivo | Flujos de producto con estado y datos en tiempo de petición |
+| `apps/store`   | Next.js / React 19 | Módulo SaaS interactivo | Comercio/licencias y flujos transaccionales                 |
 
 - **`apps/landing`**: Astro 5 + Tailwind CSS v4, salida estática (SSG), cero JS por defecto y islas React solo cuando son estrictamente necesarias.
-- **`apps/book` y `apps/store`**: Next.js con React 19, orientadas a módulos SaaS interactivos; pueden usar Server Components, Server Actions y capa de datos vía `packages/db`.
+- **`apps/book` y `apps/store`**: Next.js con React 19, orientadas a módulos SaaS interactivos; pueden usar Server Components y Server Actions.
 
 ### II. Paquetes compartidos (`packages/`)
 
 - **`packages/ui`**: componentes y tokens del design system Clean Light UI reutilizables entre apps.
-- **`packages/db`**: esquemas, migraciones y acceso a datos (p. ej. Drizzle) para las apps SaaS.
 - **`packages/config`**: configuración base compartida (ESLint, TypeScript, Prettier, Tailwind).
 
 Reglas de los paquetes:
@@ -236,20 +234,19 @@ La paleta canónica del ecosistema es la de **`specs/system-design.md` v3.0.0** 
 
 Estas rutas son las canónicas; cualquier documento que use otras rutas debe corregirse.
 
-| Elemento                     | Ruta canónica                                                    | Convención            |
-| ---------------------------- | ---------------------------------------------------------------- | --------------------- |
-| Islas interactivas (Astro)   | `apps/landing/src/components/islands/`                           | PascalCase (`.tsx`)   |
-| Secciones (Astro)            | `apps/landing/src/components/sections/`                          | PascalCase (`.astro`) |
-| Primitivos UI (Astro)        | `apps/landing/src/components/ui/`                                | PascalCase (`.astro`) |
-| Componentes SEO              | `apps/landing/src/components/seo/`                               | PascalCase (`.astro`) |
-| Layouts                      | `apps/landing/src/layouts/`                                      | PascalCase (`.astro`) |
-| Páginas / rutas              | `apps/landing/src/pages/`                                        | kebab-case (`.astro`) |
-| Componentes compartidos      | `packages/ui/`                                                    | PascalCase            |
-| Datos / content collections  | `apps/landing/src/data/` y `apps/landing/src/content/`           | kebab-case            |
-| Schemas / acceso a datos     | `packages/db/`                                                    | camelCase / kebab-case |
-| Configuración compartida     | `packages/config/`                                                | kebab-case            |
-| Specs de dominio             | `/specs/<dominio>/` (`shared-ui`, `landing`, `book`, `store`)     | `nnn-feature`         |
-| Documentos globales          | `/specs/` (raíz)                                                  | kebab-case            |
+| Elemento                    | Ruta canónica                                                 | Convención            |
+| --------------------------- | ------------------------------------------------------------- | --------------------- |
+| Islas interactivas (Astro)  | `apps/landing/src/components/islands/`                        | PascalCase (`.tsx`)   |
+| Secciones (Astro)           | `apps/landing/src/components/sections/`                       | PascalCase (`.astro`) |
+| Primitivos UI (Astro)       | `apps/landing/src/components/ui/`                             | PascalCase (`.astro`) |
+| Componentes SEO             | `apps/landing/src/components/seo/`                            | PascalCase (`.astro`) |
+| Layouts                     | `apps/landing/src/layouts/`                                   | PascalCase (`.astro`) |
+| Páginas / rutas             | `apps/landing/src/pages/`                                     | kebab-case (`.astro`) |
+| Componentes compartidos     | `packages/ui/`                                                | PascalCase            |
+| Datos / content collections | `apps/landing/src/data/` y `apps/landing/src/content/`        | kebab-case            |
+| Configuración compartida    | `packages/config/`                                            | kebab-case            |
+| Specs de dominio            | `/specs/<dominio>/` (`shared-ui`, `landing`, `book`, `store`) | `nnn-feature`         |
+| Documentos globales         | `/specs/` (raíz)                                              | kebab-case            |
 
 > **Corrección explícita**: la carpeta real de islas es `src/components/islands/` y las secciones son `src/components/sections/`. Se elimina cualquier referencia previa a `src/islands/` o a componentes de sección sueltos en la raíz de `components/`.
 
@@ -281,4 +278,4 @@ Estas rutas son las canónicas; cualquier documento que use otras rutas debe cor
 
 Foundly Labs Constitution — "Local-First, Agile Commerce, Zero Compromise."
 
-**Version**: 5.0.0 | **Ratified**: 2026-10-05 | **Last Amended**: 2026-10-08
+**Version**: 5.0.1 | **Ratified**: 2026-10-05 | **Last Amended**: 2026-10-08

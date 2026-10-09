@@ -62,6 +62,12 @@ The Clean Light UI palette is defined once in `src/styles/tokens.css` with Tailw
 directive and is the only permitted source of brand colors. Components must not contain literal
 brand hex values (enforced by an ESLint guard in `eslint.config.js`).
 
+## Shared UI library
+
+The reusable design system lives in `packages/ui` (`@foundly/ui`). MUI-based components are used
+only inside React islands (`client:only="react"`); the static landing output stays JS-free and keeps
+consuming the shared tokens through Tailwind.
+
 ## Governance & validation
 
 This project follows Spec-Driven Development. See:

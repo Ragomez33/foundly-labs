@@ -1,7 +1,7 @@
 # Foundly Labs — Code & TypeScript Standards
 
 **Version:** 2.0.0 (Monorepo — Landing Web Domain)
-**Scope:** `apps/landing` (Astro 5 + TypeScript + Tailwind CSS v4). Sirve además como **base de los estándares de TypeScript** para los paquetes compartidos (`packages/ui`, `packages/db`) y las futuras apps (`apps/book`, `apps/store`).
+**Scope:** `apps/landing` (Astro 5 + TypeScript + Tailwind CSS v4). Sirve además como **base de los estándares de TypeScript** para los paquetes compartidos (`packages/ui`) y las apps (`apps/book`, `apps/store`).
 **Authority:** Inviolable — subordinado a `specs/business-model.md`, `constitution.md` (v4.1.0) y `specs/architecture.md`.
 **Design source of truth:** `specs/system-design.md` v3.0.0 y `packages/ui/src/styles/tokens.css`.
 
@@ -9,7 +9,7 @@
 
 The use of `any`, `unknown` without type guards, or implicit type casting (`as targetType`) is strictly forbidden. All props, data structures, and helper functions must be explicitly typed.
 
-**Monorepo scope:** estas reglas de tipado aplican a `apps/landing` y son la **base obligatoria** para todo el código TypeScript del monorepo, incluidos los paquetes compartidos (`packages/ui`, `packages/db`) y las futuras apps (`apps/book`, `apps/store`).
+**Monorepo scope:** estas reglas de tipado aplican a `apps/landing` y son la **base obligatoria** para todo el código TypeScript del monorepo, incluido el paquete compartido (`packages/ui`) y las apps (`apps/book`, `apps/store`).
 
 **Type Location Rules:**
 
@@ -38,17 +38,17 @@ When client-side UI hydration is required, isolate the component in React and as
 
 Rutas relativas a `apps/landing/`, salvo los paquetes compartidos, que viven en `packages/`.
 
-| Element                    | Naming Standard              | Location                                        | Example                                             |
-| -------------------------- | ---------------------------- | ----------------------------------------------- | --------------------------------------------------- |
-| Pages / Routes             | kebab-case (`.astro`)        | `src/pages/`                                    | `src/pages/index.astro`, `src/pages/privacy.astro`  |
-| Astro Sections             | PascalCase (`.astro`)        | `src/components/sections/`                      | `Hero.astro`, `Navbar.astro`, `Footer.astro`        |
-| Astro UI Primitives        | PascalCase (`.astro`)        | `src/components/ui/`                            | `AppCard.astro`, `Badge.astro`, `Button.astro`      |
-| React Islands              | PascalCase (`.tsx`)          | `src/components/islands/`                       | `PricingCalculator.tsx`, `MobileMenu.tsx`           |
-| SEO Components             | PascalCase (`.astro`)        | `src/components/seo/`                           | `SEO.astro`                                         |
-| Layouts                    | PascalCase (`.astro`)        | `src/layouts/`                                  | `BaseLayout.astro`                                  |
-| Data / Content Collections | kebab-case (`.json` / `.ts`) | `src/content/` or `src/data/`                   | `src/data/apps.ts`, `src/content/pricing/`          |
-| Utilities & Constants      | camelCase (`.ts`)            | `src/utils/`                                    | `src/utils/analytics.ts`, `src/utils/formatters.ts` |
-| Shared Packages            | PascalCase / kebab-case      | `packages/ui`, `packages/db`, `packages/config` | `packages/ui/src/index.ts`                          |
+| Element                    | Naming Standard              | Location                         | Example                                             |
+| -------------------------- | ---------------------------- | -------------------------------- | --------------------------------------------------- |
+| Pages / Routes             | kebab-case (`.astro`)        | `src/pages/`                     | `src/pages/index.astro`, `src/pages/privacy.astro`  |
+| Astro Sections             | PascalCase (`.astro`)        | `src/components/sections/`       | `Hero.astro`, `Navbar.astro`, `Footer.astro`        |
+| Astro UI Primitives        | PascalCase (`.astro`)        | `src/components/ui/`             | `AppCard.astro`, `Badge.astro`, `Button.astro`      |
+| React Islands              | PascalCase (`.tsx`)          | `src/components/islands/`        | `PricingCalculator.tsx`, `MobileMenu.tsx`           |
+| SEO Components             | PascalCase (`.astro`)        | `src/components/seo/`            | `SEO.astro`                                         |
+| Layouts                    | PascalCase (`.astro`)        | `src/layouts/`                   | `BaseLayout.astro`                                  |
+| Data / Content Collections | kebab-case (`.json` / `.ts`) | `src/content/` or `src/data/`    | `src/data/apps.ts`, `src/content/pricing/`          |
+| Utilities & Constants      | camelCase (`.ts`)            | `src/utils/`                     | `src/utils/analytics.ts`, `src/utils/formatters.ts` |
+| Shared Packages            | PascalCase / kebab-case      | `packages/ui`, `packages/config` | `packages/ui/src/index.ts`                          |
 
 ## 4. UI, Styling & Design System Rules
 
@@ -76,7 +76,9 @@ Cards representing features, testimonials, or pricing tiers must strictly follow
 
 ```html
 <!-- GOOD: Clean Light UI Card Standard -->
-<div class="bg-white border border-[#E2E8F0] rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow">
+<div
+  class="bg-white border border-[#E2E8F0] rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow"
+>
   <!-- Content -->
 </div>
 ```
