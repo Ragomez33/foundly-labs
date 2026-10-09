@@ -7,6 +7,7 @@ import type {
   Service,
   TimeBlock,
 } from '../domain/appointments/types';
+import type { BusinessHours, OnboardingProvision, Tenant, User } from '../domain/tenancy/types';
 
 /**
  * In-memory store for the admin panel (mock state).
@@ -21,9 +22,22 @@ export interface BookStore {
   timeBlocks: TimeBlock[];
   appointments: Appointment[];
   audit: AppointmentAuditEntry[];
+  tenants: Tenant[];
+  users: User[];
+  onboardingProvisions: OnboardingProvision[];
 }
 
 const TIMEZONE = 'Europe/Madrid';
+const NOW = '2026-10-08T00:00:00.000Z';
+
+function seedBusinessHours(): BusinessHours[] {
+  const days: number[] = [1, 2, 3, 4, 5, 6]; // Mon–Sat open
+  return [0, 1, 2, 3, 4, 5, 6].map((weekday) =>
+    days.includes(weekday)
+      ? { weekday, isOpen: true, startTime: '09:00', endTime: '18:00' }
+      : { weekday, isOpen: false, startTime: '', endTime: '' },
+  );
+}
 
 function seed(): BookStore {
   const resource: Resource = {
@@ -61,6 +75,33 @@ function seed(): BookStore {
     bookingHorizonDays: 60,
   }));
 
+  const tenant: Tenant = {
+    id: 'ten-ana',
+    name: 'Estudio Ana',
+    slug: 'estudio-ana',
+    category: 'Peluquería',
+    status: 'active',
+    ownerUserId: 'u-owner-ana',
+    defaultAppointmentDurationMinutes: 30,
+    businessHours: seedBusinessHours(),
+    currency: 'EUR',
+    timezone: TIMEZONE,
+    onlineBookingEnabled: true,
+    license: null,
+    createdAt: NOW,
+    updatedAt: NOW,
+  };
+  const owner: User = {
+    id: 'u-owner-ana',
+    fullName: 'Ana Profesional',
+    email: 'ana@foundly.dev',
+    credential: 'mock-credential',
+    role: 'owner',
+    tenantId: tenant.id,
+    status: 'active',
+    createdAt: NOW,
+  };
+
   return {
     resources: [resource],
     services: [service],
@@ -69,6 +110,9 @@ function seed(): BookStore {
     timeBlocks: [],
     appointments: [],
     audit: [],
+    tenants: [tenant],
+    users: [owner],
+    onboardingProvisions: [],
   };
 }
 
@@ -91,6 +135,9 @@ export function resetStore(options: { seed?: boolean } = {}): void {
           timeBlocks: [],
           appointments: [],
           audit: [],
+          tenants: [],
+          users: [],
+          onboardingProvisions: [],
         }
       : seed();
 }

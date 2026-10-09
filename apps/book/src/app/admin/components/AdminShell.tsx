@@ -143,7 +143,7 @@ function DrawerContent({ onNavigate }: { onNavigate?: () => void }) {
     <Stack sx={{ height: '100%' }}>
       <Stack sx={{ px: 3, py: 3, alignItems: 'center' }}>
         <Link
-          href="/agenda"
+          href="/admin/agenda"
           aria-label="Foundly Book — inicio"
           style={{ display: 'flex' }}
           onClick={onNavigate}

@@ -1,5 +1,12 @@
 export type ErrorCode =
-  'UNAUTHENTICATED' | 'FORBIDDEN' | 'VALIDATION_ERROR' | 'CONFLICT' | 'STATE_ERROR' | 'NOT_FOUND';
+  | 'UNAUTHENTICATED'
+  | 'FORBIDDEN'
+  | 'VALIDATION_ERROR'
+  | 'CONFLICT'
+  | 'STATE_ERROR'
+  | 'NOT_FOUND'
+  | 'EMAIL_TAKEN'
+  | 'SLUG_TAKEN';
 
 export interface ActionError {
   code: ErrorCode;
