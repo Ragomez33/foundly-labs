@@ -95,7 +95,7 @@ Todos los proyectos usan **npm** y resuelven los workspaces desde la raíz del r
 
 Notas:
 
-- **Install Command**: al ser workspaces, Vercel debe instalar desde la raíz del monorepo; `npm install` en la raíz enlaza `@foundly/ui` a las apps.
+- **Install Command**: al ser workspaces, Vercel instala desde la raíz del monorepo; `npm install` en la raíz enlaza `@foundly/ui` a las apps. **Cada app debe declarar `@foundly/ui` en sus `dependencies`** para que el enlace exista (`apps/landing` importa `@foundly/ui/tokens.css` desde su CSS, por lo que sin la dependencia la resolución de Vite/Tailwind falla).
 - **Gateway**: el proyecto `foundly-router` con Root Directory `./` es el único que lee el `vercel.json` raíz. Su build no es crítico para el ruteo (las zonas sirven el contenido); se recomienda un build mínimo/estático o reutilizar el de la landing.
 - **Book**: requiere `transpilePackages: ['@foundly/ui']` (ya configurado en `apps/book/next.config.mjs`).
 - **Astro**: la landing genera salida estática en `apps/landing/dist`.
