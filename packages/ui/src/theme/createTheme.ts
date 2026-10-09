@@ -90,7 +90,57 @@ export function createFoundlyTheme(overrides: FoundlyThemeOptions = {}): Theme {
       borderRadius: RADIUS.control,
     },
     typography: {
-      fontFamily: 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+      // Inter Variable matches the ecosystem landing's font (apps/landing).
+      fontFamily:
+        '"Inter Variable", Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+      h1: {
+        fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+        fontWeight: 700,
+        letterSpacing: '-0.025em',
+        lineHeight: 1.1,
+      },
+      h2: {
+        fontSize: 'clamp(1.875rem, 4vw, 2.75rem)',
+        fontWeight: 700,
+        letterSpacing: '-0.02em',
+        lineHeight: 1.15,
+      },
+      h3: { fontSize: '1.875rem', fontWeight: 600, letterSpacing: '-0.01em' },
+      h4: { fontSize: '1.5rem', fontWeight: 600 },
+      h5: { fontSize: '1.25rem', fontWeight: 600 },
+      h6: { fontSize: '1.125rem', fontWeight: 600 },
+      body1: { fontSize: '1rem', lineHeight: 1.6 },
+      body2: { fontSize: '0.875rem', lineHeight: 1.6 },
+      button: { textTransform: 'none', fontWeight: 600 },
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          // Pill/rounded-full buttons in sentence case, matching the landing.
+          root: {
+            borderRadius: `${RADIUS.pill}px`,
+            textTransform: 'none',
+            fontWeight: 600,
+            minHeight: 44,
+            paddingLeft: '1.5rem',
+            paddingRight: '1.5rem',
+          },
+          containedPrimary: ({ theme }) => ({
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.background.paper,
+            '&:hover': { backgroundColor: theme.palette.primary.dark },
+          }),
+          outlined: ({ theme }) => ({
+            backgroundColor: theme.palette.background.paper,
+            borderColor: theme.palette.border.subtle,
+            color: theme.palette.text.primary,
+            '&:hover': {
+              backgroundColor: theme.palette.surface.badgePill,
+              borderColor: theme.palette.border.subtle,
+            },
+          }),
+        },
+      },
     },
   });
 }

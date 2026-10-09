@@ -1,4 +1,5 @@
 import '@foundly/ui/tokens.css';
+import '@fontsource-variable/inter';
 
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { FoundlyThemeProvider } from '@foundly/ui';

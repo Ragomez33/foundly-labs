@@ -90,20 +90,47 @@ function HeroBand({
   return (
     <Stack
       sx={{
+        position: 'relative',
+        overflow: 'hidden',
         background: (theme) =>
           `linear-gradient(180deg, ${theme.palette.primary.light} 0%, ${theme.palette.background.paper} 78%)`,
         borderBottom: 1,
         borderColor: 'divider',
       }}
     >
-      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 12 } }}>
+      {/* Foundly "F" isotipo watermark (low opacity, mirrors the landing hero) */}
+      <Stack
+        aria-hidden="true"
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 0,
+          opacity: 0.22,
+          mixBlendMode: 'multiply',
+          pointerEvents: 'none',
+        }}
+      >
+        <Image src="/icon.png" alt="" width={720} height={720} priority />
+      </Stack>
+
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 12 }, position: 'relative', zIndex: 1 }}>
         <Stack spacing={3} sx={{ maxWidth: 780 }}>
-          <Badge pill status="neutral">
-            {hero.badge}
-          </Badge>
-          <Typography variant="h2" component="h1">
-            {hero.title}
-          </Typography>
+          <Stack
+            sx={{
+              alignSelf: 'flex-start',
+              borderRadius: '9999px',
+              px: 2,
+              py: 0.5,
+              backgroundColor: 'primary.light',
+            }}
+          >
+            <Typography variant="body2" sx={{ fontWeight: 600, color: 'primary.dark' }}>
+              {hero.badge}
+            </Typography>
+          </Stack>
+          <Typography variant="h1">{hero.title}</Typography>
           <Typography
             variant="h5"
             component="p"
