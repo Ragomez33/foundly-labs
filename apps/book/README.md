@@ -19,8 +19,11 @@ La app se expone bajo el prefijo público `/book` (multi-zone de `vercel.json`);
   (duración por defecto, horario general, recurso, reglas de disponibilidad y servicio principal).
   El borrador del wizard es local-first (sobrevive recarga/sin conexión) y `createBusiness` es
   idempotente por `draftId`.
-- **Portal público**: `getPublicBusiness(slug)` solo expone negocios `active`; los huecos ofrecidos
-  reutilizan el motor de disponibilidad (`domain/availability`) y la reserva crea citas `origin: 'online'`.
+- **Portal público (mini-sitio)**: `getPublicBusiness(slug)` solo expone negocios `active` con su perfil
+  completo (identidad, bio, contacto y redes, servicios con tarifa vigente, especialistas y políticas); el contenido
+  se organiza en pestañas (Servicios · Equipo · Información) y el flujo de reserva guiado
+  (especialista → fecha/franjas → datos → confirmación) reutiliza el motor de disponibilidad
+  (`domain/availability`) y crea citas `origin: 'online'`.
 - **Dashboard privado**: todas las lecturas se aislan por tenant (el `tenantId` viene de la sesión,
   nunca de la URL); sin sesión válida `/admin/*` redirige a `/onboarding`.
 

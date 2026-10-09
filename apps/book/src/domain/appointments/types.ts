@@ -16,6 +16,10 @@ export interface Resource {
   timezone: string;
   /** The tenant (business) that owns this resource. */
   tenantId: string;
+  /** Specialist metadata shown on the public portal (role, avatar, bio). */
+  role: string | null;
+  avatar: string | null;
+  bio: string | null;
 }
 
 export interface Service {

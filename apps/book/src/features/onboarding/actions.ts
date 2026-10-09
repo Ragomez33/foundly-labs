@@ -77,6 +77,12 @@ export function createBusiness(input: unknown): ActionResult<CreateBusinessResul
     timezone: 'Europe/Madrid',
     onlineBookingEnabled: true,
     license: null,
+    avatar: null,
+    cover: null,
+    bio: null,
+    address: null,
+    phone: null,
+    social: null,
     createdAt: now,
     updatedAt: now,
   };

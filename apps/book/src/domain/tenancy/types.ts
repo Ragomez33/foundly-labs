@@ -40,8 +40,23 @@ export interface Tenant {
   timezone: string;
   onlineBookingEnabled: boolean;
   license: TenantLicense | null;
+  /** Portal profile (003): identity, about and contact. */
+  avatar: string | null;
+  cover: string | null;
+  bio: string | null;
+  address: string | null;
+  phone: string | null;
+  social: { instagram?: string; whatsapp?: string } | null;
   createdAt: string;
   updatedAt: string;
+}
+
+/** A free-form booking/cancellation policy shown on the public portal. */
+export interface PortalPolicy {
+  id: string;
+  tenantId: string;
+  title: string;
+  body: string;
 }
 
 /** An account able to sign in and administer a business. */

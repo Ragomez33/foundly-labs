@@ -14,6 +14,9 @@ export function provisionDefaults(tenant: Tenant): ProvisionedDefaults {
     active: true,
     timezone: tenant.timezone,
     tenantId: tenant.id,
+    role: null,
+    avatar: null,
+    bio: null,
   };
 
   const rules: AvailabilityRule[] = tenant.businessHours

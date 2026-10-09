@@ -25,6 +25,12 @@ function makeTenant(id: string, slug: string): Tenant {
     timezone: 'Europe/Madrid',
     onlineBookingEnabled: true,
     license: null,
+    avatar: null,
+    cover: null,
+    bio: null,
+    address: null,
+    phone: null,
+    social: null,
     createdAt: NOW,
     updatedAt: NOW,
   };

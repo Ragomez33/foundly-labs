@@ -8,7 +8,7 @@ interface TenantPortalPageProps {
   params: Promise<{ tenantSlug: string }>;
 }
 
-/** Public booking portal (public `/book/<slug>`, guest booking). */
+/** Public mini-site (public `/book/<slug>`, guest booking). */
 export default async function TenantPortalPage({ params }: TenantPortalPageProps) {
   const { tenantSlug } = await params;
   const resolved = getPublicBusiness(tenantSlug);
@@ -21,19 +21,5 @@ export default async function TenantPortalPage({ params }: TenantPortalPageProps
     return <UnavailablePanel message={message} />;
   }
 
-  const business = resolved.business;
-  return (
-    <PublicPortal
-      business={{
-        name: business.name,
-        category: business.category,
-        slug: business.slug,
-        services: business.services.map((service) => ({
-          id: service.id,
-          name: service.name,
-          durationMinutes: service.durationMinutes,
-        })),
-      }}
-    />
-  );
+  return <PublicPortal profile={resolved.business} />;
 }

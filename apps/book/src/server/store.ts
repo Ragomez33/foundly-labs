@@ -7,7 +7,13 @@ import type {
   Service,
   TimeBlock,
 } from '../domain/appointments/types';
-import type { BusinessHours, OnboardingProvision, Tenant, User } from '../domain/tenancy/types';
+import type {
+  BusinessHours,
+  OnboardingProvision,
+  PortalPolicy,
+  Tenant,
+  User,
+} from '../domain/tenancy/types';
 import type { Session } from './auth';
 
 /**
@@ -27,6 +33,7 @@ export interface BookStore {
   users: User[];
   onboardingProvisions: OnboardingProvision[];
   sessions: Session[];
+  portalPolicies: PortalPolicy[];
 }
 
 const TIMEZONE = 'Europe/Madrid';
@@ -49,6 +56,20 @@ function seed(): BookStore {
     active: true,
     timezone: TIMEZONE,
     tenantId: 'ten-ana',
+    role: 'Peluquera senior',
+    avatar: null,
+    bio: 'Especialista en cortes, color y acabados.',
+  };
+  const secondResource: Resource = {
+    id: 'res-luis',
+    name: 'Luis Estilista',
+    type: 'professional',
+    active: true,
+    timezone: TIMEZONE,
+    tenantId: 'ten-ana',
+    role: 'Barbero',
+    avatar: null,
+    bio: 'Cortes de caballero, degradados y arreglo de barba.',
   };
   const service: Service = {
     id: 'svc-corte',
@@ -92,6 +113,15 @@ function seed(): BookStore {
     timezone: TIMEZONE,
     onlineBookingEnabled: true,
     license: null,
+    avatar: null,
+    cover: null,
+    bio: 'Estudio de peluquería y estética que combina técnica, tiempo y trato cercano en pleno centro de Madrid.',
+    address: 'Calle Mayor 7, 28013 Madrid',
+    phone: '+34 612 345 678',
+    social: {
+      instagram: 'https://instagram.com/estudioana',
+      whatsapp: 'https://wa.me/34612345678',
+    },
     createdAt: NOW,
     updatedAt: NOW,
   };
@@ -110,9 +140,23 @@ function seed(): BookStore {
     role: 'admin',
     tenantId: tenant.id,
   };
+  const portalPolicies: PortalPolicy[] = [
+    {
+      id: 'pol-booking',
+      tenantId: tenant.id,
+      title: 'Cómo reservar',
+      body: 'Elige servicio, especialista y franja; confirma tus datos y recibirás tu cita en estado pendiente.',
+    },
+    {
+      id: 'pol-cancellation',
+      tenantId: tenant.id,
+      title: 'Política de cancelación',
+      body: 'Puedes cancelar o reprogramar sin coste hasta 24 horas antes de tu cita.',
+    },
+  ];
 
   return {
-    resources: [resource],
+    resources: [resource, secondResource],
     services: [service],
     rates: [rate],
     availabilityRules,
@@ -123,6 +167,7 @@ function seed(): BookStore {
     users: [owner],
     onboardingProvisions: [],
     sessions: [ownerSession],
+    portalPolicies,
   };
 }
 
@@ -149,6 +194,7 @@ export function resetStore(options: { seed?: boolean } = {}): void {
           users: [],
           onboardingProvisions: [],
           sessions: [],
+          portalPolicies: [],
         }
       : seed();
 }

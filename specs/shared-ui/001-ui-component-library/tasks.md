@@ -231,5 +231,6 @@ Task: "Implement Badge in packages/ui/src/components/Badge/Badge.tsx"
 - [P] tasks touch different files and have no incomplete dependencies.
 - [Story] labels map each task to its user story for traceability.
 - The ESLint guard forbids hex literals in `packages/ui/src/**`; keep all colors token-driven (T010/T037 enforce this).
+- **Roadmap note (from `specs/book/003-public-portal-minisite` research R3/R4/R10)**: consider adding `Tabs`, `Stepper` and `Avatar` primitives to `@foundly/ui` so the portal's accessible tab controller, guided booking flow and specialist avatars move out of app code into the design system.
 - This feature lives in the `shared-ui` domain: `specs/shared-ui/001-ui-component-library/`.
 - Commit after each task or logical group.

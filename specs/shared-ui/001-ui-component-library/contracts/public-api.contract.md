@@ -45,7 +45,7 @@ interface FoundlyThemeProviderProps {
 
 | Primitive     | Required props                           | Key optional props                                       | Variants / states                                               |
 | ------------- | ---------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------- |
-| `Button`      | `children`                               | `variant`, `loading`, `disabled`, `startIcon`, `endIcon` | primary, secondary, destructive; default/hover/disabled/loading |
+| `Button`      | `children`                               | `variant`, `loading`, `disabled`, `startIcon`, `endIcon`, `id`, `role`, `aria-selected`, `aria-controls` | primary, secondary, destructive; default/hover/disabled/loading |
 | `Card`        | `children`                               | `header`, `media`, `actions`, `elevated`                 | —                                                               |
 | `Badge`       | `children`                               | `status`, `pill`, `icon`                                 | positive, negative, warning, info, neutral                      |
 | `Modal`       | `open`, `onClose`, `title`, `children`   | `actions`, `disableBackdropClose`, `disableEscapeClose`  | open/closed lifecycle                                           |

@@ -15,6 +15,11 @@ export interface ButtonProps {
   fullWidth?: boolean;
   onClick?: () => void;
   'aria-label'?: string;
+  /** Forwarded to the native button (ARIA tabs/panels, ids for labelled-by). */
+  id?: string;
+  role?: string;
+  'aria-selected'?: boolean;
+  'aria-controls'?: string;
 }
 
 const VARIANT_PROPS = {
@@ -34,6 +39,10 @@ export function Button({
   fullWidth = false,
   onClick,
   'aria-label': ariaLabel,
+  id,
+  role,
+  'aria-selected': ariaSelected,
+  'aria-controls': ariaControls,
 }: ButtonProps) {
   const { variant: muiVariant, color } = VARIANT_PROPS[variant];
   return (
@@ -46,6 +55,10 @@ export function Button({
       onClick={onClick}
       aria-label={ariaLabel}
       aria-busy={loading || undefined}
+      aria-selected={ariaSelected}
+      aria-controls={ariaControls}
+      id={id}
+      role={role}
       disableElevation
       startIcon={loading ? <CircularProgress size={16} color="inherit" /> : startIcon}
       endIcon={endIcon}

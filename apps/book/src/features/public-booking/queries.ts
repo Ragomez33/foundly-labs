@@ -1,39 +1,80 @@
-import type { Service } from '../../domain/appointments/types';
 import type { DayAvailability } from '../../domain/availability/types';
 import { computeAvailability } from '../../domain/availability/computeAvailability';
 import type { Tenant } from '../../domain/tenancy/types';
 import { getStore } from '../../server/store';
-
-export interface PublicBusiness {
-  name: string;
-  category: string;
-  slug: string;
-  timezone: string;
-  services: Service[];
-}
+import type { PublicBusinessProfile, PublicService, PublicSpecialist } from './types';
 
 export type ResolveResult =
   | { status: 'unavailable'; reason: 'not-found' | 'draft' | 'suspended' }
-  | { status: 'available'; business: PublicBusiness };
+  | { status: 'available'; business: PublicBusinessProfile };
 
-/** Resolve a tenant's public portal; exposes no data for non-active tenants (FR-017). */
-export function getPublicBusiness(slug: string): ResolveResult {
-  const tenant = getStore().tenants.find((item) => item.slug === slug);
+/** Current applicable rate for a service (effective period contains `at`). */
+function currentRate(serviceId: string, at: Date) {
+  const atMs = at.getTime();
+  return getStore()
+    .rates.filter(
+      (rate) =>
+        rate.serviceId === serviceId &&
+        new Date(rate.effectiveFrom).getTime() <= atMs &&
+        (rate.effectiveTo === null || new Date(rate.effectiveTo).getTime() > atMs),
+    )
+    .sort((a, b) => new Date(b.effectiveFrom).getTime() - new Date(a.effectiveFrom).getTime())[0];
+}
+
+/** Resolve the tenant's public mini-site; exposes no data for non-active tenants (FR-016). */
+export function getPublicBusiness(slug: string, now: Date = new Date()): ResolveResult {
+  const store = getStore();
+  const tenant = store.tenants.find((item) => item.slug === slug);
   if (!tenant) return { status: 'unavailable', reason: 'not-found' };
   if (tenant.status !== 'active') {
     return { status: 'unavailable', reason: tenant.status === 'draft' ? 'draft' : 'suspended' };
   }
-  const services = getStore().services.filter(
-    (service) => service.tenantId === tenant.id && service.active,
-  );
+
+  const services: PublicService[] = store.services
+    .filter((service) => service.tenantId === tenant.id && service.active)
+    .map((service) => {
+      const rate = currentRate(service.id, now);
+      return {
+        id: service.id,
+        name: service.name,
+        description: service.description,
+        durationMinutes: service.durationMinutes,
+        priceCents: rate?.amountCents ?? 0,
+        currency: rate?.currency ?? tenant.currency,
+      };
+    });
+
+  const specialists: PublicSpecialist[] = store.resources
+    .filter((resource) => resource.tenantId === tenant.id && resource.active)
+    .map((resource) => ({
+      id: resource.id,
+      name: resource.name,
+      role: resource.role,
+      avatar: resource.avatar,
+      bio: resource.bio,
+    }));
+
+  const policies = store.portalPolicies
+    .filter((policy) => policy.tenantId === tenant.id)
+    .map((policy) => ({ title: policy.title, body: policy.body }));
+
   return {
     status: 'available',
     business: {
+      slug: tenant.slug,
       name: tenant.name,
       category: tenant.category,
-      slug: tenant.slug,
+      avatar: tenant.avatar,
+      cover: tenant.cover,
+      bio: tenant.bio,
+      address: tenant.address,
+      phone: tenant.phone,
+      social: tenant.social,
       timezone: tenant.timezone,
       services,
+      specialists,
+      weeklyHours: tenant.businessHours,
+      policies,
     },
   };
 }
@@ -45,19 +86,24 @@ export interface DateRange {
 
 /**
  * Offered slots for a tenant's service by reusing the pure availability engine
- * (research R5). Deterministic when `now` is provided; defaults to the current time.
+ * (research R5). `resourceId` scopes slots to a specialist; defaults to the
+ * tenant's first resource. Deterministic when `now` is provided.
  */
 export function getOfferedSlots(
   tenant: Tenant,
   serviceId: string,
   range: DateRange,
   now: Date = new Date(),
+  resourceId?: string,
 ): DayAvailability[] {
   const service = getStore().services.find(
     (item) => item.id === serviceId && item.tenantId === tenant.id && item.active,
   );
   if (!service) return [];
-  const resource = getStore().resources.find((item) => item.tenantId === tenant.id);
+
+  const resource = resourceId
+    ? getStore().resources.find((item) => item.tenantId === tenant.id && item.id === resourceId)
+    : getStore().resources.find((item) => item.tenantId === tenant.id);
   if (!resource) return [];
 
   const rules = getStore().availabilityRules.filter((rule) => rule.resourceId === resource.id);

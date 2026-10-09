@@ -10,11 +10,19 @@ const ACTIVE_STATUSES: readonly Appointment['status'][] = ['pending', 'confirmed
 const bookSchema = z.object({
   tenantSlug: z.string().min(1),
   serviceId: z.string().min(1),
+  resourceId: z.string().min(1).optional(),
   startAt: z.string().datetime({ offset: true }),
   clientName: z.string().min(1).max(120),
-  clientContact: z.string().max(200).optional(),
+  clientEmail: z.string().email(),
+  clientPhone: z.string().min(8).max(20).regex(/^[0-9+\- ]+$/),
+  notes: z.string().max(2000).optional(),
 });
 export type BookPublicInput = z.infer<typeof bookSchema>;
+
+export interface SlotDay {
+  date: string;
+  slots: { startAt: string; endAt: string }[];
+}
 
 function findConflict(resourceId: string, start: Date, end: Date): Appointment | undefined {
   const startMs = start.getTime();
@@ -47,7 +55,8 @@ export function bookPublicAppointment(input: unknown): ActionResult<Appointment>
   if (!parsed.success) {
     return fail('VALIDATION_ERROR', 'Datos de reserva inválidos.', zodFields(parsed.error));
   }
-  const { tenantSlug, serviceId, startAt, clientName, clientContact } = parsed.data;
+  const { tenantSlug, serviceId, resourceId, startAt, clientName, clientEmail, clientPhone, notes } =
+    parsed.data;
   const store = getStore();
 
   const resolved = getPublicBusiness(tenantSlug);
@@ -60,8 +69,11 @@ export function bookPublicAppointment(input: unknown): ActionResult<Appointment>
     (item) => item.id === serviceId && item.tenantId === tenant?.id && item.active,
   );
   if (!tenant || !service) return fail('NOT_FOUND', 'Servicio no encontrado.');
-  const resource = store.resources.find((item) => item.tenantId === tenant.id);
-  if (!resource) return fail('NOT_FOUND', 'Sin recursos disponibles.');
+
+  const resource = resourceId
+    ? store.resources.find((item) => item.tenantId === tenant.id && item.id === resourceId)
+    : store.resources.find((item) => item.tenantId === tenant.id);
+  if (!resource) return fail('NOT_FOUND', 'Recurso no encontrado.');
 
   const start = new Date(startAt);
   const end = new Date(start.getTime() + service.durationMinutes * MINUTE_MS);
@@ -79,11 +91,11 @@ export function bookPublicAppointment(input: unknown): ActionResult<Appointment>
     resourceId: resource.id,
     serviceId: service.id,
     clientName,
-    clientContact: clientContact ?? null,
+    clientContact: `${clientEmail} · ${clientPhone}`,
     startAt: start.toISOString(),
     endAt: end.toISOString(),
     status: 'pending',
-    notes: null,
+    notes: notes ?? null,
     appliedDurationMinutes: service.durationMinutes,
     appliedAmountCents: rate?.amountCents ?? 0,
     appliedCurrency: rate?.currency ?? 'EUR',
@@ -107,24 +119,23 @@ export function bookPublicAppointment(input: unknown): ActionResult<Appointment>
   return ok(appointment);
 }
 
-export interface SlotDay {
-  date: string;
-  slots: { startAt: string; endAt: string }[];
-}
-
-/** Serializable slot lookup consumed by the client BookingPanel. */
+/** Serializable slot lookup consumed by the client booking flow (per specialist). */
 export function fetchOfferedSlots(input: {
   tenantSlug: string;
   serviceId: string;
+  resourceId?: string;
   startDate: string;
   endDate: string;
 }): SlotDay[] {
   const tenant = getStore().tenants.find((item) => item.slug === input.tenantSlug);
   if (!tenant || tenant.status !== 'active') return [];
-  const days = getOfferedSlots(tenant, input.serviceId, {
-    startDate: input.startDate,
-    endDate: input.endDate,
-  });
+  const days = getOfferedSlots(
+    tenant,
+    input.serviceId,
+    { startDate: input.startDate, endDate: input.endDate },
+    new Date(),
+    input.resourceId,
+  );
   return days.map((day) => ({
     date: day.date,
     slots: day.slots.map((slot) => ({
