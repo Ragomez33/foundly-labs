@@ -34,7 +34,7 @@ Single location: `apps/book/`.
 - [x] T002 Create `apps/book/tsconfig.json` and `apps/book/next.config.mjs` with `transpilePackages: ['@foundly/ui']`.
 - [x] T003 [P] Configure Vitest for `apps/book` in `apps/book/vitest.config.ts` and `apps/book/vitest.setup.ts`.
 - [x] T004 Create the app root layout `apps/book/src/app/layout.tsx` (`AppRouterCacheProvider` + `FoundlyThemeProvider`).
-- [x] T005 Create the admin shell `apps/book/src/app/(admin)/layout.tsx` and redirect `apps/book/src/app/page.tsx` → `/agenda`.
+- [x] T005 Create the admin shell `apps/book/src/app/(admin)/layout.tsx` (persistent sidebar + auth guard) and redirect `apps/book/src/app/page.tsx` → `/agenda`.
 - [x] T006 Run `npm install` at the repository root to wire the workspace.
 
 ---
@@ -119,6 +119,18 @@ Single location: `apps/book/`.
 - [ ] T039 [P] Add agenda pagination/windowing in `apps/book/src/features/appointments/queries.ts`.
 - [x] T040 Run the `quickstart.md` validation: `npm run test -w @foundly/book`, `npm run lint`, `npm run build -w @foundly/book`.
 - [ ] T041 [P] (Optional) Add a Playwright E2E spec `apps/book/e2e/agenda.spec.ts`.
+
+---
+
+## Phase 8: Admin navigation shell (US4 refinement)
+
+**Goal**: Replace the flat top bar with a persistent left sidebar that carries the brand, module navigation and the active user profile.
+
+- [x] T042 [US4] Refactor `apps/book/src/app/(admin)/components/AdminShell.tsx` into a persistent left `Drawer` (temporary on small viewports) with the brand logo header, primary/secondary navigation and the user profile footer.
+- [x] T043 [US4] Add the navigation model `apps/book/src/app/(admin)/components/navigation.ts` (Agenda, Servicios, Disponibilidad + Configuración, Ayuda/Soporte, Acerca de Foundly) using `@mui/icons-material` icons.
+- [x] T044 [US4] Add the Foundly Book branding assets (`apps/book/public/branding-logo.png`, `apps/book/public/icon.png`) and wire them with `next/image`.
+- [x] T045 [US4] Add the placeholder pages `configuracion`, `soporte` and `acerca` using `@foundly/ui` (`Card`, `Typography`).
+- [x] T046 [US4] Document the sidebar shell, iconography and branding in `spec.md`, `plan.md` and `research.md`.
 
 ---
 

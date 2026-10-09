@@ -75,6 +75,8 @@ As an operator, I want every admin screen to share the ecosystem's visual identi
 1. **Given** any admin screen, **When** it renders, **Then** it uses the shared design-system components and tokens with no ad-hoc brand styling.
 2. **Given** any admin screen, **When** navigated by keyboard only, **Then** all interactive controls are reachable, focus is visible and actions are operable.
 3. **Given** a data-entry form (appointment, service, block), **When** validation fails, **Then** clear, accessible error messaging is shown inline.
+4. **Given** any admin screen, **When** it renders, **Then** a persistent left navigation shell groups the module sections (Agenda, Servicios, Disponibilidad) and the secondary options (Configuración, Ayuda/Soporte, Acerca de Foundly), shows the Foundly Book brand identity (logo/icon) at the top and the active user profile (avatar + name + role) at the bottom, and highlights the current section.
+5. **Given** a small viewport, **When** the operator opens the navigation, **Then** the shell collapses into a temporary drawer that can be dismissed by keyboard and by selecting a section.
 
 ---
 
@@ -111,6 +113,8 @@ As an operator, I want every admin screen to share the ecosystem's visual identi
 - **FR-016**: Every admin screen MUST be fully operable by keyboard and expose accessible labels, roles and inline validation messages.
 - **FR-017**: Every admin screen MUST use the shared design system and its tokens; no ad-hoc brand styling is permitted.
 - **FR-018**: Administrative changes MUST follow the ecosystem's local-first principle: work must not be blocked by connectivity and pending changes must be recoverable.
+- **FR-019**: The admin panel MUST present a persistent left navigation shell that groups the module's primary sections (agenda, services, availability) and its secondary options (settings, help/support, about), carrying the Foundly Book brand identity (logo/icon) at the top and the active user profile (avatar, display name and role) at the bottom.
+- **FR-020**: The navigation shell MUST mark the active section, remain fully keyboard-operable, and collapse into a temporary drawer on small viewports; navigation must use the ecosystem's shared iconography.
 
 ### Key Entities _(include if feature involves data)_
 
@@ -135,6 +139,7 @@ As an operator, I want every admin screen to share the ecosystem's visual identi
 - **SC-005**: Price or duration changes in the catalog affect 100% of new appointments and 0% of already-booked appointments.
 - **SC-006**: Every admin screen passes automated accessibility checks with zero critical violations and is fully keyboard-operable.
 - **SC-007**: 100% of admin UI uses shared design-system components and tokens (no ad-hoc brand colors).
+- **SC-008**: 100% of admin screens render inside the shared navigation shell, which exposes the brand identity, the active user profile and the current section on every route.
 
 ## Assumptions
 
@@ -146,3 +151,4 @@ As an operator, I want every admin screen to share the ecosystem's visual identi
 - Client-facing online booking is out of scope; this feature covers the administrative panel only.
 - Payments/checkout are out of scope; the panel may reference prices but does not process payments.
 - Notifications/reminders are out of scope for this version (they belong to the appointment lifecycle roadmap).
+- The panel uses the Foundly Book branding assets (full logo and isotipo) and the ecosystem's shared iconography for its navigation shell.

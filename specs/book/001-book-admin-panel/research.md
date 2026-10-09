@@ -49,7 +49,7 @@ Resolves the technical unknowns from the plan's Technical Context. Each item rec
 
 ## R8. UI composition with @foundly/ui
 
-- **Decision**: Compose the agenda, services and availability views **exclusively** from `@foundly/ui` primitives (`Card`, `DataTable`, `Badge`, `Chip`, `Button`, `Modal`, `TextField`) and the `FoundlyThemeProvider`; no ad-hoc brand styling.
+- **Decision**: Compose the agenda, services and availability views **exclusively** from `@foundly/ui` primitives (`Card`, `DataTable`, `Badge`, `Chip`, `Button`, `Modal`, `TextField`, `Typography`, `Stack`, `Container`) and the `FoundlyThemeProvider`; no ad-hoc brand styling. The admin navigation shell is an app-level composition documented in R10.
 - **Rationale**: Guarantees SC-006/SC-007 and the design-system principle.
 - **Alternatives considered**: styling MUI directly in the app (rejected by Principle VI).
 
@@ -59,6 +59,14 @@ Resolves the technical unknowns from the plan's Technical Context. Each item rec
 - **Rationale**: The risky logic is pure and cheap to unit-test. Component tests cover accessibility.
 - **Alternatives considered**: only E2E (slow, poor signal for edge cases); no tests (rejected by the workflow gates).
 
+## R10. Admin navigation shell, branding and iconography
+
+- **Decision**: Render the admin shell as a persistent left **navigation drawer** (a temporary/collapsible drawer on small viewports) built from MUI structural components (`Drawer`, `List`, `ListItemButton`, `Avatar`, `IconButton`) styled **only with theme tokens**, combined with the `@foundly/ui` `Typography`/`Stack`/`Container` primitives. The drawer header shows the Foundly Book **branding logo** via `next/image`; the footer shows the active **user profile** (avatar with initials, display name and role). Primary navigation is Agenda, Servicios and Disponibilidad; secondary placeholder navigation is Configuración, Ayuda/Soporte and Acerca de Foundly. Navigation icons come from `@mui/icons-material` (already a `@foundly/ui` peer dependency) imported per-symbol.
+- **Rationale**: The design system exposes no navigation-shell primitive, and the constitution favours a single shared visual identity. Composing the shell from theme-token-styled MUI structure (rather than adding brand styling) keeps it on-system; per-symbol icon imports keep the bundle tree-shaken; `next/image` with the packaged branding assets keeps the header crisp and optimised. This supersedes the generic top `AppHeader` baseline of `specs/system-design.md` §5.1 **for the Book module only** (see Open items).
+- **Alternatives considered**: adding a `Sidebar`/`AppShell` primitive to `@foundly/ui` (deferred — the shell is app-specific and belongs to `apps/book`); keeping the flat top AppBar (rejected — the module navigation has grown beyond a single row); whole-icon-library imports (rejected by the icon/bundle policy).
+
 ## Open items
 
 None. All Technical Context unknowns are resolved; no `NEEDS CLARIFICATION` remains. The persistence strategy is explicitly deferred to `specs/architecture.md`, and Foundly Pass SSO is captured as an external dependency.
+
+**Doc alignment note**: the Book admin panel adopts a left sidebar shell (R10) instead of the global top `AppHeader` described in `specs/system-design.md` §5.1. The divergence is intentional for the SaaS workspace and should be reflected in the next amendment of `specs/system-design.md`.

@@ -10,7 +10,7 @@
 
 Build the administrative panel for Foundly Book inside `apps/book`: an agenda that manages the appointment lifecycle, a catalog of services and rates, and an availability engine that turns working hours, breaks, blocked periods and existing appointments into bookable slots.
 
-The panel is a Next.js (App Router) application rendered server-first, reusing the **@foundly/ui** design system for its interface. Domain rules (availability computation, conflict detection, lifecycle) are implemented as a pure, framework-agnostic TypeScript module so they are testable in isolation. For this version the panel runs on an **in-memory store (mock) expressed only with TypeScript types/interfaces**; the ecosystem's persistence strategy is **not yet defined**, so storage sits behind a single decoupled seam.
+The panel is a Next.js (App Router) application rendered server-first, reusing the **@foundly/ui** design system for its interface. All admin screens render inside a persistent left **navigation shell** (sidebar) that carries the Foundly Book brand identity, the module sections and the active user profile, collapsing to a temporary drawer on small viewports. Domain rules (availability computation, conflict detection, lifecycle) are implemented as a pure, framework-agnostic TypeScript module so they are testable in isolation. For this version the panel runs on an **in-memory store (mock) expressed only with TypeScript types/interfaces**; the ecosystem's persistence strategy is **not yet defined**, so storage sits behind a single decoupled seam.
 
 ## Technical Context
 
@@ -51,7 +51,7 @@ Authority hierarchy (Principle 1): `specs/business-model.md` > `constitution.md`
 
 **Constraints introduced by gates**:
 
-- **C1**: Agenda/services/availability views are built exclusively from `@foundly/ui` components.
+- **C1**: Agenda/services/availability views are built exclusively from `@foundly/ui` components. The navigation shell (sidebar, lists, avatar, icons) uses MUI structural components styled only with theme tokens plus the `@foundly/ui` `Typography`/`Stack`/`Container` primitives, because the design system exposes no navigation-shell primitive.
 - **C2**: Domain logic (availability, conflicts, lifecycle) contains no framework imports and no literal brand colors; the UI never computes availability itself.
 - **C3**: No storage technology is introduced. Data access is confined to the in-memory store seam; swapping it later must not change the domain engine.
 
@@ -77,12 +77,19 @@ specs/book/001-book-admin-panel/
 apps/book/                           # Next.js admin panel
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx               # FoundlyThemeProvider + AppRouterCacheProvider
+│   │   ├── layout.tsx               # tokens.css + FoundlyThemeProvider + AppRouterCacheProvider
 │   │   └── (admin)/
-│   │       ├── layout.tsx           # admin shell (nav, auth guard)
+│   │       ├── layout.tsx           # admin shell (sidebar nav, auth guard)
+│   │       ├── components/
+│   │       │   ├── AdminShell.tsx   # persistent sidebar (brand, nav, user profile)
+│   │       │   ├── navigation.ts    # primary/secondary nav model + icons
+│   │       │   └── PlaceholderPanel.tsx
 │   │       ├── agenda/page.tsx
 │   │       ├── services/page.tsx
-│   │       └── availability/page.tsx
+│   │       ├── availability/page.tsx
+│   │       ├── configuracion/page.tsx
+│   │       ├── soporte/page.tsx
+│   │       └── acerca/page.tsx
 │   ├── domain/
 │   │   ├── appointments/types.ts    # domain interfaces (no persistence)
 │   │   └── availability/            # pure engine (C2)
@@ -94,12 +101,15 @@ apps/book/                           # Next.js admin panel
 │       ├── store.ts                 # in-memory store seam (no storage technology)
 │       ├── auth.ts                  # Foundly Pass session guard
 │       └── result.ts                # ActionResult
+├── public/
+│   ├── branding-logo.png            # Foundly Book full logo (sidebar header)
+│   └── icon.png                     # Foundly Book isotipo (mobile header / favicon)
 ├── next.config.mjs                  # transpilePackages: ['@foundly/ui']
 ├── tsconfig.json
 └── package.json
 ```
 
-**Structure Decision**: The feature lives entirely in `apps/book`. Domain logic is isolated under `apps/book/src/domain` to keep it framework-free and unit-testable, and all data access goes through the single in-memory seam `apps/book/src/server/store.ts`. No shared data package is created.
+**Structure Decision**: The feature lives entirely in `apps/book`. Domain logic is isolated under `apps/book/src/domain` to keep it framework-free and unit-testable, and all data access goes through the single in-memory seam `apps/book/src/server/store.ts`. The admin shell (sidebar navigation, brand header and user profile) lives under `apps/book/src/app/(admin)/components/`; branding assets are served from `apps/book/public/`. No shared data package is created.
 
 ## Complexity Tracking
 
