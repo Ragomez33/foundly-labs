@@ -5,12 +5,18 @@ export interface ProductFeature {
 
 export const BOOK_HERO = {
   title: 'Foundly Book',
-  subtitle: 'La manera más fácil de gestionar tus agendas, servicios y citas — y de que tus clientes reserven online.',
+  subtitle:
+    'Agendas, servicios, profesionales y citas en un solo lugar — y un portal público donde tus clientes reservan online.',
 } as const;
 
 export const BOOK_CTA = {
   href: '/onboarding',
   label: 'Registrar mi negocio',
+} as const;
+
+export const BOOK_DEMO = {
+  href: '/estudio-ana',
+  label: 'Ver portal de ejemplo',
 } as const;
 
 export const BOOK_FEATURES: ProductFeature[] = [

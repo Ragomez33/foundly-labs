@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button, Card, Stack, TextField, Typography } from '@foundly/ui';
 import { bookPublicAppointment, fetchOfferedSlots, type SlotDay } from '../actions';
 
@@ -30,6 +30,7 @@ type Status = 'idle' | 'busy' | 'success' | 'error';
 
 /** Client booking flow on the public portal (guest booking, FR-018). */
 export function BookingPanel({ tenantSlug, services }: BookingPanelProps) {
+  const [mounted, setMounted] = useState(false);
   const [serviceId, setServiceId] = useState<string | null>(null);
   const [date, setDate] = useState<string>(() => dateKey(new Date()));
   const [slots, setSlots] = useState<SlotDay[]>([]);
@@ -38,6 +39,11 @@ export function BookingPanel({ tenantSlug, services }: BookingPanelProps) {
   const [clientContact, setClientContact] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [message, setMessage] = useState<string | null>(null);
+
+  // Avoid SSR/client hydration mismatches on date-derived UI.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const days = useMemo(() => {
     const base = new Date();
@@ -94,7 +100,7 @@ export function BookingPanel({ tenantSlug, services }: BookingPanelProps) {
   return (
     <Card header={<Typography variant="h6">Reserva tu cita</Typography>}>
       <Stack spacing={2}>
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+        <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
           {services.map((service) => (
             <Button
               key={service.id}
@@ -106,21 +112,23 @@ export function BookingPanel({ tenantSlug, services }: BookingPanelProps) {
           ))}
         </Stack>
 
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-          {days.map((day) => (
-            <Button
-              key={day}
-              variant="secondary"
-              onClick={() => selectDate(day)}
-              disabled={!serviceId || status === 'success'}
-            >
-              {day}
-            </Button>
-          ))}
-        </Stack>
+        {mounted ? (
+          <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
+            {days.map((day) => (
+              <Button
+                key={day}
+                variant="secondary"
+                onClick={() => selectDate(day)}
+                disabled={!serviceId || status === 'success'}
+              >
+                {day}
+              </Button>
+            ))}
+          </Stack>
+        ) : null}
 
         {daySlots.length > 0 ? (
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+          <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
             {daySlots.map((slot) => (
               <Button
                 key={slot.startAt}
