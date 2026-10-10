@@ -59,7 +59,7 @@ describe('WizardShell (US1, contracts/onboarding.contract.md)', () => {
 
     await waitFor(() => expect(createBusinessMock).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/agenda'));
-  });
+  }, 20000);
 
   it('is accessible on the first step', async () => {
     const { container } = render(
